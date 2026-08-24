@@ -22,7 +22,7 @@ def test_real_backtest_accounting_and_expected_outputs_are_frozen() -> None:
     assert len(result.fills) == len(result.trade_ledger) == 1
     assert (
         result.fingerprint
-        == "bbd5386c389320d7a52d64c35632a133daf48574b6be05eda2531bbf25fa427d"
+        == "b6b4be7b4917c65f6ba03cca6a4a1f231266034dbc39803a80dfa3fc2fca1e96"
     )
     assert result.fills[0].raw_open == result.fills[0].price
     assert result.fills[0].quantity == 7000

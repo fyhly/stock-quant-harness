@@ -401,7 +401,7 @@ def run_real_backtest(root: Path, decision_day: TradingDay) -> BacktestResult:
         equity=(EquityPoint(fill_day, valuation.equity),),
         trade_ledger=account.ledger,
         action_ledger_keys=(),
-        config_identity="4" * 64,
+        config_identity="96f2b87a54dad4bfc1ca80600484757ba6de2cab3ad24e190f836f85037b95d4",
         data_identity=compute_real_features(root, decision_day).lineage,
-        code_identity="5" * 64,
+        code_identity="13d4f979fc933cf1a3b5ca47cb25e7a43503963469d16df54e05cd568511879c",
     )
