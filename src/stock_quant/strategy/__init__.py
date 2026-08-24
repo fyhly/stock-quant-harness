@@ -14,6 +14,11 @@ from stock_quant.strategy.rank import (
     SelectionRecord,
     select_top_n,
 )
+from stock_quant.strategy.schedule import (
+    rebalance_schedule,
+    RebalanceFrequency,
+    ScheduledDecision,
+)
 
 __all__ = [
     "create_score_intent",
@@ -22,8 +27,11 @@ __all__ = [
     "ScoreIntent",
     "RankedSelection",
     "RankMissingPolicy",
+    "rebalance_schedule",
+    "RebalanceFrequency",
     "SelectionRecord",
     "select_top_n",
+    "ScheduledDecision",
     "StrategyContractError",
     "StrategySnapshot",
 ]
