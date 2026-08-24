@@ -23,6 +23,14 @@ from stock_quant.multifactor.risk_integration import (
     approve_multifactor_candidate,
 )
 from stock_quant.multifactor.turnover import TurnoverAudit, audit_turnover
+from stock_quant.multifactor.cost_stress import (
+    CostLevel,
+    CostStressError,
+    CostStressRecord,
+    CostStressResult,
+    cost_stress,
+    render_cost_stress_report,
+)
 
 __all__ = [
     "CompositeScore",
@@ -41,4 +49,10 @@ __all__ = [
     "approve_multifactor_candidate",
     "TurnoverAudit",
     "audit_turnover",
+    "CostLevel",
+    "CostStressError",
+    "CostStressRecord",
+    "CostStressResult",
+    "cost_stress",
+    "render_cost_stress_report",
 ]
