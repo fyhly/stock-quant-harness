@@ -10,8 +10,10 @@ from stock_quant.provider.api import (
     RetryableProviderError,
     TerminalProviderError,
 )
+from stock_quant.provider.tushare import acquire_daily
 
 __all__ = [
+    "acquire_daily",
     "FakeTransport",
     "ProviderError",
     "ProviderQuery",
