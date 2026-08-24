@@ -12,10 +12,17 @@ from stock_quant.provider.api import (
 )
 from stock_quant.provider.tushare import acquire_daily
 from stock_quant.provider.master import acquire_security_master, SecurityMasterBatch
+from stock_quant.provider.history import (
+    acquire_effective_history,
+    CapabilityUnavailableError,
+    EffectiveHistoryRecord,
+)
 
 __all__ = [
     "acquire_daily",
     "acquire_security_master",
+    "acquire_effective_history",
+    "CapabilityUnavailableError",
     "FakeTransport",
     "ProviderError",
     "ProviderQuery",
@@ -25,4 +32,5 @@ __all__ = [
     "RetryableProviderError",
     "TerminalProviderError",
     "SecurityMasterBatch",
+    "EffectiveHistoryRecord",
 ]
