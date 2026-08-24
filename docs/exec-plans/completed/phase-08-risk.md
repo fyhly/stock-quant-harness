@@ -1,6 +1,6 @@
 # Phase 8 ExecPlan — Risk Engine
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -46,4 +46,22 @@ Focused Ruff/Mypy/tests plus PIT industry, arithmetic, infeasible, ordering and 
 
 ## Evidence
 
-Pending implementation and review.
+- M8.1–M8.6 — PASS in commits `b0b0de5`, `0c690ca`, `101cb75`,
+  `6427629`, `98a38eb`, `0359d54`; focused Risk/Portfolio tests and Ruff/Mypy
+  passed. The fixed pipeline is Budget→Single→Sector→Turnover→Exposure and only
+  approved RiskDecision can emit rebalance intent.
+- Initial review found unsafe current holdings plus a tight turnover cap could
+  reintroduce name/sector excess. Fix `d580f40` added final validation of every
+  hard constraint, PIT classification over proposed∪current, and deterministic
+  typed `RiskInfeasibleError` instead of silently violating either constraint.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (64 sources), tests PASS (218), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M8.1–M8.6: PASS after Gate remediation
+- Phase 8 Review: PASS
+- Extreme/infeasible inputs fail closed; no direct Portfolio bypass remains.
+- No optimizer/Provider/network/execution/broker or Phase 9 scope.
+- Residual design: constraint reductions retain residual as cash; budgets are
+  explicit caps rather than an optimizer and do not redistribute excess.
