@@ -1,6 +1,6 @@
 # Phase 3 ExecPlan — Security Master / Point-in-Time Universe
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -65,4 +65,23 @@ All inputs are injected local facts/artifacts. No network, Provider, broker/acco
 
 ## Evidence
 
-Pending implementation and review.
+- M3.1–M3.9 — PASS in ordered commits `68d0c27`, `d2563bd`, `e567966`,
+  `a0d6516`, `bd2cc69`, `3048c9e`, `173c601`, `65ba1dd`, `99714e3`.
+  Each passed focused Ruff/Mypy/tests and diff checks (32 milestone tests total).
+- Review confirmed retained delisted identities, effective-dated listing/ST/
+  suspension/index/industry facts, missing-history fail-closed behavior, strict
+  pre-decision liquidity windows, deterministic typed exclusion reasons, and
+  content-addressed atomic snapshots with rule/upstream/code/config identities.
+- Historical integration proves later ST/delisting facts do not contaminate an
+  earlier universe and later index constituents do not backfill history.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (20 sources), tests PASS (104), evals PASS (1); single full closure.
+
+## Review decision
+
+- Milestone Reviews M3.1–M3.9: PASS
+- Phase 3 Review: PASS
+- No Provider/network/backtest/Phase 4 scope or live side effect.
+- Residual risks: index coverage completeness remains an explicit trusted input;
+  snapshot records canonical upstream IDs but a cross-store resolver belongs to
+  later integration; universe `as_of` currently has trading-date granularity.
