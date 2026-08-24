@@ -11,6 +11,7 @@ from stock_quant.market_research.runner import (
     MarketWorkItem,
     run_cross_sectional_batch,
 )
+from stock_quant.market_research.ic import MarketICSummary, market_ic_summary
 
 __all__ = [
     "MarketUniverseGateError",
@@ -20,4 +21,6 @@ __all__ = [
     "MarketItemRecord",
     "MarketWorkItem",
     "run_cross_sectional_batch",
+    "MarketICSummary",
+    "market_ic_summary",
 ]
