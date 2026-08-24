@@ -12,6 +12,13 @@ from stock_quant.actions.factors import (
     AdjustmentFactorSeries,
     build_adjustment_factors,
 )
+from stock_quant.actions.execution import (
+    execution_price,
+    ExecutionPriceField,
+    RawExecutionBar,
+    RawExecutionPriceView,
+    raw_execution_price_view,
+)
 from stock_quant.actions.model import (
     BonusShareEvent,
     CashDividend,
@@ -55,6 +62,8 @@ __all__ = [
     "CashDividendApplication",
     "CashDividendEntitlement",
     "CorporateAction",
+    "execution_price",
+    "ExecutionPriceField",
     "FlatDividendTaxPolicy",
     "forward_adjusted_view",
     "ForwardAdjustedBar",
@@ -64,4 +73,7 @@ __all__ = [
     "RightsElection",
     "RightsIssueAdjustment",
     "ResearchPriceExecutionError",
+    "RawExecutionBar",
+    "RawExecutionPriceView",
+    "raw_execution_price_view",
 ]
