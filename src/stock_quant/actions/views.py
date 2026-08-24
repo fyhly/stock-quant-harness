@@ -49,6 +49,42 @@ class ForwardAdjustedSeries:
     event_lineage: Tuple[str, ...]
 
 
+@dataclass(frozen=True)
+class BackwardAdjustedBar:
+    """Backward-adjusted OHLC anchored to an explicit historical base scale."""
+
+    security_id: SecurityId
+    trading_day: TradingDay
+    open: Decimal
+    high: Decimal
+    low: Decimal
+    close: Decimal
+    factor: Decimal
+    raw_volume: int
+    raw_amount: Decimal
+    factor_series_id: str
+    event_lineage: Tuple[str, ...]
+
+    @property
+    def research_only(self) -> bool:
+        return True
+
+    def as_execution_price(self) -> Decimal:
+        raise ResearchPriceExecutionError(
+            "backward-adjusted research prices cannot be execution prices"
+        )
+
+
+@dataclass(frozen=True)
+class BackwardAdjustedSeries:
+    security_id: SecurityId
+    base_date: date
+    knowledge_cutoff: date
+    factor_series_id: str
+    bars: Tuple[BackwardAdjustedBar, ...]
+    event_lineage: Tuple[str, ...]
+
+
 def forward_adjusted_view(
     raw: DailyBarSeries, factors: AdjustmentFactorSeries
 ) -> ForwardAdjustedSeries:
@@ -82,6 +118,55 @@ def forward_adjusted_view(
         )
     return ForwardAdjustedSeries(
         raw.security_id,
+        factors.knowledge_cutoff,
+        factors.series_id,
+        tuple(adjusted),
+        factors.event_lineage,
+    )
+
+
+def backward_adjusted_view(
+    raw: DailyBarSeries,
+    factors: AdjustmentFactorSeries,
+    *,
+    base_date: date,
+) -> BackwardAdjustedSeries:
+    """Keep the historical side raw-scaled and rescale bars on/after each ex date."""
+
+    if not isinstance(raw, DailyBarSeries):
+        raise TypeError("raw must be a DailyBarSeries")
+    if not isinstance(factors, AdjustmentFactorSeries):
+        raise TypeError("factors must be an AdjustmentFactorSeries")
+    if type(base_date) is not date:
+        raise TypeError("base_date must be a date, not a datetime")
+    if base_date != factors.knowledge_cutoff:
+        raise ValueError("base_date must equal factor knowledge_cutoff")
+    if raw.security_id != factors.security_id:
+        raise ValueError("raw and factor security identities must match")
+    if any(bar.trading_day.value > base_date for bar in raw.bars):
+        raise ValueError("raw bars cannot extend beyond backward base_date")
+    adjusted = []
+    for bar in raw.bars:
+        divisor = factors.backward_divisor_for(bar.trading_day.value)
+        factor = Decimal(1) / divisor
+        adjusted.append(
+            BackwardAdjustedBar(
+                bar.security_id,
+                bar.trading_day,
+                bar.open / divisor,
+                bar.high / divisor,
+                bar.low / divisor,
+                bar.close / divisor,
+                factor,
+                bar.volume,
+                bar.amount,
+                factors.series_id,
+                factors.event_lineage,
+            )
+        )
+    return BackwardAdjustedSeries(
+        raw.security_id,
+        base_date,
         factors.knowledge_cutoff,
         factors.series_id,
         tuple(adjusted),

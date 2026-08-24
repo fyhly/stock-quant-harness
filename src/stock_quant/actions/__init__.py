@@ -24,6 +24,9 @@ from stock_quant.actions.shares import (
     FractionalSharePolicy,
 )
 from stock_quant.actions.views import (
+    backward_adjusted_view,
+    BackwardAdjustedBar,
+    BackwardAdjustedSeries,
     forward_adjusted_view,
     ForwardAdjustedBar,
     ForwardAdjustedSeries,
@@ -40,6 +43,9 @@ __all__ = [
     "apply_rights_issue",
     "AdjustmentFactorPoint",
     "AdjustmentFactorSeries",
+    "backward_adjusted_view",
+    "BackwardAdjustedBar",
+    "BackwardAdjustedSeries",
     "apply_bonus_shares",
     "BonusShareEvent",
     "build_adjustment_factors",

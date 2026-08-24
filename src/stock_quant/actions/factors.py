@@ -49,8 +49,13 @@ class AdjustmentFactorSeries:
     def backward_factor_for(self, bar_date: date) -> Decimal:
         """Divide post-ex raw prices by ratios already effective by bar date."""
 
+        return Decimal(1) / self.backward_divisor_for(bar_date)
+
+    def backward_divisor_for(self, bar_date: date) -> Decimal:
+        """Return the cumulative ratio used as the direct price divisor."""
+
         return _product(
-            Decimal(1) / point.ratio
+            point.ratio
             for point in self.points
             if point.ex_date <= bar_date <= self.knowledge_cutoff
         )
