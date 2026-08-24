@@ -1,5 +1,11 @@
 """Point-in-time Security Master and Universe primitives."""
 
+from stock_quant.universe.index import (
+    IndexId,
+    IndexMembership,
+    IndexMembershipHistory,
+    UnknownIndexHistoryError,
+)
 from stock_quant.universe.master import (
     ConflictingSecurityMetadataError,
     DuplicateSecurityError,
@@ -24,10 +30,14 @@ __all__ = [
     "ExclusionCode",
     "HistoricalSTFilter",
     "HistoricalTradeStatusFilter",
+    "IndexId",
+    "IndexMembership",
+    "IndexMembershipHistory",
     "ListingHistoryFilter",
     "RuleDecision",
     "SecurityMaster",
     "SecurityMetadata",
     "STEligibilityPolicy",
     "UnknownSecurityError",
+    "UnknownIndexHistoryError",
 ]
