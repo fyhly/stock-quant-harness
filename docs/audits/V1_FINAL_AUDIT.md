@@ -1,10 +1,10 @@
 # V1 Final Audit
 
-Date: 2026-08-24  
-Audited revision: `423da8f` plus audit commits `f33d787` and `5535c55`  
-Audit branch: `audit/v1-final`  
-Scope: Phase 0 through Phase 16  
-Authority: this is the execution-agent audit draft; the Main Agent owns the final V1 decision.
+Date: 2026-08-24
+Audited revision: `423da8f` plus audit commits `f33d787` and `5535c55`
+Audit branch: `audit/v1-final`
+Scope: Phase 0 through Phase 16
+Authority: Main Agent final V1 decision.
 
 ## Outcome
 
@@ -17,7 +17,9 @@ Authority: this is the execution-agent audit draft; the Main Agent owns the fina
 | Daily / OFFLINE / safety | PASS | Fatal quality invokes no downstream stage, RiskDecision-only view, manual-decision report, exact local replay and static capability scan |
 | Complete verification | PASS | High-risk targeted suite 275 passed; V1 audit evals 5 passed; real E2E 6 passed; final `make verify` PASS |
 
-Audit-agent recommendation: **PASS**. No confirmed critical or high-severity finding remains open.
+Final outcome: **PASS**. The Main Agent independently reviewed the audit diff,
+semantic gates, safety scans, phase evidence and complete verification closure.
+No confirmed critical, high or medium finding remains open.
 
 ## A1 — Repository, Harness and Git
 
@@ -157,7 +159,6 @@ interpreter import state. The complete closure invocation shown above then passe
 
 ## Frozen-core decision
 
-The audited Phase 0–16 core is suitable to freeze as V1 after the Main Agent independently
-confirms this draft, runs its final Gate, and merges/pushes the audit branch. Future work
-must use a new reviewed plan and must not weaken PIT, immutability, OFFLINE, RiskEngine or
-manual-decision boundaries.
+The audited Phase 0–16 core is frozen as V1. Future work must use a new reviewed
+plan and must not weaken PIT, immutability, OFFLINE, RiskEngine or manual-decision
+boundaries.

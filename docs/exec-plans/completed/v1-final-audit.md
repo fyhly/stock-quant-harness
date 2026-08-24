@@ -1,6 +1,6 @@
 # V1 Final Audit ExecPlan
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -42,4 +42,26 @@ Status: ACTIVE
 
 ## Evidence
 
-Pending audit.
+- V1-A1 — PASS: all 17 Phase plans are completed in order, every referenced
+  commit resolves, dependencies are pinned, and `main == origin/main` at audit
+  base `423da8f`.
+- V1-A2–A5 — PASS: high-risk targeted suite 275 passed; new cross-module
+  semantic/safety evals cover PIT/survivorship, action/execution separation,
+  OOS context isolation, Daily fatal zero-downstream, frozen real replay,
+  hidden network/trading capability and secret patterns.
+- Real E2E replay remained exactly
+  `b6b4be7b4917c65f6ba03cca6a4a1f231266034dbc39803a80dfa3fc2fca1e96`
+  and every fill follows the decision date.
+- Initial complete closure exposed collection-order dependence in the legacy
+  bootstrap eval. Bounded fix `5535c55` stabilized the declared root API check
+  without changing product behavior; no test was removed or weakened.
+- Final audit closure: Ruff PASS, Mypy PASS (121 sources), tests PASS (325),
+  evals PASS (6).
+- Audit report: `docs/audits/V1_FINAL_AUDIT.md`.
+
+## Review decision
+
+- V1-A1–V1-A6: PASS
+- V1 Final Audit: PASS
+- Core decision: Phase 0–16 V1 is frozen; future work must enter a separately
+  reviewed Research Loop plan and preserve all safety/PIT boundaries.
