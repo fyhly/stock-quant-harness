@@ -22,6 +22,7 @@ from stock_quant.multifactor.risk_integration import (
     RiskApprovedCandidate,
     approve_multifactor_candidate,
 )
+from stock_quant.multifactor.turnover import TurnoverAudit, audit_turnover
 
 __all__ = [
     "CompositeScore",
@@ -38,4 +39,6 @@ __all__ = [
     "baseline_allocators",
     "RiskApprovedCandidate",
     "approve_multifactor_candidate",
+    "TurnoverAudit",
+    "audit_turnover",
 ]
