@@ -34,9 +34,15 @@ from stock_quant.universe.rules import (
     HistoricalTradeStatusFilter,
     STEligibilityPolicy,
 )
+from stock_quant.universe.snapshot import (
+    create_universe_snapshot,
+    UniverseSnapshot,
+    UniverseSnapshotStore,
+)
 
 __all__ = [
     "ConflictingSecurityMetadataError",
+    "create_universe_snapshot",
     "DuplicateSecurityError",
     "Exclusion",
     "ExclusionCode",
@@ -59,6 +65,8 @@ __all__ = [
     "UnknownSecurityError",
     "UniverseEngine",
     "UniverseResult",
+    "UniverseSnapshot",
+    "UniverseSnapshotStore",
     "UnknownIndexHistoryError",
     "UnknownIndustryHistoryError",
 ]
