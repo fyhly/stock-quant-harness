@@ -25,6 +25,15 @@ from stock_quant.actions.model import (
     CorporateAction,
     RightsIssue,
 )
+from stock_quant.actions.position import (
+    apply_bonus_to_position,
+    apply_rights_to_position,
+    DuplicateActionApplicationError,
+    PositionActionAudit,
+    PositionState,
+    recognize_dividend_entitlement,
+    settle_dividend_receivable,
+)
 from stock_quant.actions.shares import (
     apply_bonus_shares,
     BonusShareAdjustment,
@@ -46,8 +55,10 @@ from stock_quant.actions.rights import (
 )
 
 __all__ = [
+    "apply_bonus_to_position",
     "apply_cash_dividend",
     "apply_rights_issue",
+    "apply_rights_to_position",
     "AdjustmentFactorPoint",
     "AdjustmentFactorSeries",
     "backward_adjusted_view",
@@ -62,6 +73,7 @@ __all__ = [
     "CashDividendApplication",
     "CashDividendEntitlement",
     "CorporateAction",
+    "DuplicateActionApplicationError",
     "execution_price",
     "ExecutionPriceField",
     "FlatDividendTaxPolicy",
@@ -69,6 +81,8 @@ __all__ = [
     "ForwardAdjustedBar",
     "ForwardAdjustedSeries",
     "FractionalSharePolicy",
+    "PositionActionAudit",
+    "PositionState",
     "RightsIssue",
     "RightsElection",
     "RightsIssueAdjustment",
@@ -76,4 +90,6 @@ __all__ = [
     "RawExecutionBar",
     "RawExecutionPriceView",
     "raw_execution_price_view",
+    "recognize_dividend_entitlement",
+    "settle_dividend_receivable",
 ]
