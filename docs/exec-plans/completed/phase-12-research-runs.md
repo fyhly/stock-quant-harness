@@ -1,6 +1,6 @@
 # Phase 12 ExecPlan — Standardized Experiments and Reports
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -51,4 +51,19 @@ Focused Ruff/Mypy/tests plus immutability, identity, formula, no-leakage, offlin
 
 ## Evidence
 
-Pending implementation and review.
+- M12.1–M12.7 — PASS in commits `4fcebfb`, `a9ce517`, `22fd820`,
+  `d5cb37a`, `1f88b22`, `eeaaeb9`, `2cfa206`; 15 research tests plus
+  Ruff/Mypy passed.
+- Review confirmed append-only IDs/store, ten pinned identities, atomic
+  Parquet/JSON artifacts, explicit Decimal metrics, strict per-date PIT factor
+  analytics, escaped self-contained reports and offline drift-rejecting replay.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (89 sources), tests PASS (266), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M12.1–M12.7: PASS
+- Phase 12 Review: PASS
+- Residual: empty quantile buckets are explicitly zero-count/zero-mean;
+  injected loaders must themselves be append-only; atomic publication assumes
+  the store-root filesystem as enforced by staging location.
