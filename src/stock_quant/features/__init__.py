@@ -10,6 +10,11 @@ from stock_quant.features.api import (
 )
 from stock_quant.features.momentum import PriceObservation, trailing_return
 from stock_quant.features.reversal import short_term_reversal
+from stock_quant.features.quality import (
+    quality_factors,
+    QualityFactors,
+    StatementObservation,
+)
 from stock_quant.features.volatility import (
     MissingReturnPolicy,
     trailing_volatility,
@@ -31,8 +36,11 @@ __all__ = [
     "FeatureScope",
     "FundamentalObservation",
     "PriceObservation",
+    "quality_factors",
+    "QualityFactors",
     "MissingReturnPolicy",
     "short_term_reversal",
+    "StatementObservation",
     "trailing_return",
     "trailing_volatility",
     "ValuationObservation",
