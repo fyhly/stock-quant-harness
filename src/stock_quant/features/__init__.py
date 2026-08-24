@@ -15,6 +15,12 @@ from stock_quant.features.quality import (
     QualityFactors,
     StatementObservation,
 )
+from stock_quant.features.size_liquidity import (
+    LiquidityBar,
+    ShareObservation,
+    SizeLiquidityFactors,
+    size_liquidity_factors,
+)
 from stock_quant.features.volatility import (
     MissingReturnPolicy,
     trailing_volatility,
@@ -35,11 +41,15 @@ __all__ = [
     "FeatureResult",
     "FeatureScope",
     "FundamentalObservation",
+    "LiquidityBar",
     "PriceObservation",
     "quality_factors",
     "QualityFactors",
     "MissingReturnPolicy",
     "short_term_reversal",
+    "ShareObservation",
+    "SizeLiquidityFactors",
+    "size_liquidity_factors",
     "StatementObservation",
     "trailing_return",
     "trailing_volatility",
