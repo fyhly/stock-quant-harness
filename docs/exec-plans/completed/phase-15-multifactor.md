@@ -1,6 +1,6 @@
 # Phase 15 ExecPlan — Multi-factor Portfolio
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -46,4 +46,17 @@ Focused Ruff/Mypy/tests plus PIT, fit-scope, arithmetic, constraint, turnover an
 
 ## Evidence
 
-Pending implementation and review.
+- M15.1–M15.6 — PASS in commits `77d73fc`, `c5ef89b`, `121b2b8`,
+  `d568db9`, `f7dbef9`, `00e4612`; 12 focused tests plus Ruff/Mypy passed.
+- Review confirmed same-date aligned combination, PIT industry/size
+  neutralization, deterministic baselines, mandatory RiskDecision integration,
+  transparent turnover and complete monotonic cost-level reporting.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (112 sources), tests PASS (309), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M15.1–M15.6: PASS
+- Phase 15 Review: PASS
+- Residual: explicit unweighted single-size OLS, shifted-score baseline and
+  one-way aggregate tax convention are simplified but fully evidenced.
