@@ -1,6 +1,6 @@
 # Phase 10 ExecPlan — First Real A-share E2E Backtest
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -50,4 +50,24 @@ Focused checks per milestone. Gate requires a complete offline real-data pipelin
 
 ## Evidence
 
-Pending implementation and review.
+- M10.1–M10.6 — PASS in commits `bcf70a5`, `792f1b7`, `1958467`,
+  `1f7c8f4`, `db7ec5e`, `3366e18`; 12 E2E tests plus Ruff/Mypy passed.
+- One explicit HTTPS acquisition froze two unadjusted (`fqt=0`) Shanghai/
+  Shenzhen raw responses for 2023–2024, exact hashes, query/timestamps and 968
+  normalized rows. Every subsequent test/run is offline.
+- PIT Universe, cutoff-safe momentum/volatility, scheduled Strategy→Portfolio→
+  RiskDecision and next-session raw-open Backtest repeat exactly. Fingerprint:
+  `b6b4be7b4917c65f6ba03cca6a4a1f231266034dbc39803a80dfa3fc2fca1e96`.
+- Audit report pins source/raw/Parquet/config/Git/run identities, quality,
+  results, limitations and research-only boundary.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (74 sources), tests PASS (245), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M10.1–M10.6: PASS
+- Phase 10 Review: PASS
+- Residual: bounded two-name/one-rebalance sample is integration evidence, not a
+  market study; simplified zero slippage/fixed fees and no in-window actions;
+  public-source correctness is not guaranteed and all frozen PIT status facts
+  are explicitly fixture-scoped.
