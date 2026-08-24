@@ -1,6 +1,6 @@
 # Phase 1 ExecPlan — A-share domain model
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -83,4 +83,31 @@ No network, Provider, brokerage, account, browser automation, live market query,
 
 ## Evidence
 
-Pending implementation and review.
+- M1.1 — PASS: commit `d85efc8`; 11 focused identifier tests plus Ruff/Mypy;
+  canonical MIC form, explicit exchange mapping, validation and hash/round-trip
+  behavior reviewed. Unknown prefixes fail closed rather than being guessed.
+- M1.2 — PASS: commit `26d8626`; 7 focused calendar tests plus Ruff/Mypy;
+  injected local history, coverage boundaries, holiday gaps, deterministic
+  ordering, sessions, and date/datetime separation reviewed.
+- M1.3 — PASS: commit `3a903a1`; 6 focused lifecycle tests plus Ruff/Mypy;
+  `[listing_date, delisting_date)` semantics, pre/post-listing behavior,
+  chronology rejection, and retained delisted identities reviewed.
+- M1.4 — PASS: commit `011483e`; 7 focused status tests plus Ruff/Mypy;
+  effective intervals, gaps, overlap rejection, suspension transitions, and
+  current-status contamination regression reviewed.
+- Main-Agent Phase Gate: `make verify` PASS on 2026-08-24; Ruff PASS, Mypy PASS
+  (6 sources), tests PASS (32), evals PASS (1). One run supplied the complete
+  non-duplicative closure because `verify` aggregates all public checks.
+- Scope review: no Provider, Universe, Backtest, network, brokerage, or Phase 2
+  implementation; extracted startup pack remains untracked.
+
+## Review decision
+
+- Milestone Reviews M1.1–M1.4: PASS
+- Phase 1 Review: PASS
+- Explicit semantics: calendar gaps within declared coverage are known
+  non-trading dates; listing and status intervals are half-open; state models
+  express supplied exchange facts and do not promise fill feasibility.
+- Residual risk: supported security prefixes are intentionally conservative;
+  later Security Master ingestion must reject or explicitly version new/unknown
+  segments instead of silently coercing them.
