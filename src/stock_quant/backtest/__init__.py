@@ -14,6 +14,12 @@ from stock_quant.backtest.account import (
     TradeAccountingEntry,
     value_account,
 )
+from stock_quant.backtest.constraints import (
+    ConstraintDecision,
+    OrderSide,
+    RejectionCode,
+    SuspensionConstraint,
+)
 from stock_quant.backtest.timeline import (
     DeterministicTimeline,
     EventKind,
@@ -36,15 +42,19 @@ __all__ = [
     "book_buy",
     "book_sell",
     "credit_corporate_action_lot",
+    "ConstraintDecision",
     "EventKind",
     "EventPhase",
     "MissingValuationError",
+    "OrderSide",
     "Position",
     "PositionLot",
     "RawMark",
+    "RejectionCode",
     "require_sellable",
     "sellable_quantity",
     "StaleValuationError",
+    "SuspensionConstraint",
     "TimelineConflictError",
     "T1SellabilityError",
     "TimelineEvent",
