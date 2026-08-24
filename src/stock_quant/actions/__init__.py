@@ -7,6 +7,11 @@ from stock_quant.actions.dividend import (
     CashDividendEntitlement,
     FlatDividendTaxPolicy,
 )
+from stock_quant.actions.factors import (
+    AdjustmentFactorPoint,
+    AdjustmentFactorSeries,
+    build_adjustment_factors,
+)
 from stock_quant.actions.model import (
     BonusShareEvent,
     CashDividend,
@@ -27,8 +32,11 @@ from stock_quant.actions.rights import (
 __all__ = [
     "apply_cash_dividend",
     "apply_rights_issue",
+    "AdjustmentFactorPoint",
+    "AdjustmentFactorSeries",
     "apply_bonus_shares",
     "BonusShareEvent",
+    "build_adjustment_factors",
     "BonusShareAdjustment",
     "calculate_cash_entitlement",
     "CashDividend",
