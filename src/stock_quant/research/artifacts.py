@@ -22,6 +22,7 @@ class RunArtifactError(RuntimeError):
 class RunArtifacts:
     run_id: RunId
     files: Tuple[Tuple[str, str], ...]
+    backtest_fingerprint: str = ""
 
 
 class RunStore:
@@ -142,7 +143,10 @@ class RunStore:
         for name, digest in files:
             if hashlib.sha256((target / name).read_bytes()).hexdigest() != digest:
                 raise RunArtifactError(f"artifact tamper: {name}")
-        return RunArtifacts(run_id, files)
+        fingerprint = manifest.get("backtest_fingerprint")
+        if not isinstance(fingerprint, str) or len(fingerprint) != 64:
+            raise RunArtifactError("backtest fingerprint missing or corrupt")
+        return RunArtifacts(run_id, files, fingerprint)
 
     @staticmethod
     def _parquet(path: Path, rows: Any, schema: Any) -> None:

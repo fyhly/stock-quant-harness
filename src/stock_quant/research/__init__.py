@@ -21,6 +21,11 @@ from stock_quant.research.factor_analytics import (
     factor_analytics,
 )
 from stock_quant.research.report import render_html_report
+from stock_quant.research.reproduce import (
+    ReproductionError,
+    ReproductionResult,
+    reproduce_run,
+)
 
 __all__ = [
     "RunId",
@@ -43,4 +48,7 @@ __all__ = [
     "QuantileSummary",
     "factor_analytics",
     "render_html_report",
+    "ReproductionError",
+    "ReproductionResult",
+    "reproduce_run",
 ]
