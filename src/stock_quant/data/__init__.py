@@ -12,13 +12,16 @@ from stock_quant.data.raw import (
     RawArtifactRef,
     RawArtifactStore,
 )
+from stock_quant.data.storage import DailyBarParquetStore, NormalizedArtifactRef
 
 __all__ = [
     "ArtifactIntegrityError",
     "DAILY_BAR_SCHEMA_VERSION",
     "DailyBar",
     "DailyBarSeries",
+    "DailyBarParquetStore",
     "InvalidArtifactError",
+    "NormalizedArtifactRef",
     "RawArtifactMetadata",
     "RawArtifactRef",
     "RawArtifactStore",
