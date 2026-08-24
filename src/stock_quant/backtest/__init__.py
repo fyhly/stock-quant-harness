@@ -53,6 +53,13 @@ from stock_quant.backtest.execution import (
     OrderIntent,
     SlippageModel,
 )
+from stock_quant.backtest.rebalance import (
+    create_rebalance_intent,
+    plan_rebalance,
+    RebalanceIntent,
+    RebalancePlan,
+    TargetWeight,
+)
 from stock_quant.backtest.t1 import (
     credit_corporate_action_lot,
     require_sellable,
@@ -73,6 +80,7 @@ __all__ = [
     "capture_record_entitlement",
     "credit_corporate_action_lot",
     "ConstraintDecision",
+    "create_rebalance_intent",
     "EventKind",
     "execute_next_open",
     "ExecutionOutcome",
@@ -86,10 +94,13 @@ __all__ = [
     "OrderIntent",
     "Position",
     "PositionLot",
+    "plan_rebalance",
     "PriceLimitBand",
     "PriceLimitRule",
     "PriceLimitSchedule",
     "RawMark",
+    "RebalanceIntent",
+    "RebalancePlan",
     "RejectionCode",
     "require_sellable",
     "sellable_quantity",
@@ -99,6 +110,7 @@ __all__ = [
     "TimelineConflictError",
     "T1SellabilityError",
     "TimelineEvent",
+    "TargetWeight",
     "TradeAccountingEntry",
     "TradingCostBreakdown",
     "TradingCostRule",
