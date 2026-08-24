@@ -1,5 +1,10 @@
 """Point-in-time Security Master and Universe primitives."""
 
+from stock_quant.universe.engine import (
+    SecurityExclusions,
+    UniverseEngine,
+    UniverseResult,
+)
 from stock_quant.universe.index import (
     IndexId,
     IndexMembership,
@@ -48,9 +53,12 @@ __all__ = [
     "LiquidityPolicy",
     "RuleDecision",
     "SecurityMaster",
+    "SecurityExclusions",
     "SecurityMetadata",
     "STEligibilityPolicy",
     "UnknownSecurityError",
+    "UniverseEngine",
+    "UniverseResult",
     "UnknownIndexHistoryError",
     "UnknownIndustryHistoryError",
 ]
