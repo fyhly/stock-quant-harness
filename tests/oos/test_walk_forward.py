@@ -57,3 +57,29 @@ def test_failed_window_is_retained_and_totals_reconcile() -> None:
     )
     assert result.total == result.succeeded + result.failed == 2
     assert result.failed == 1 and result.records[1].failure_stage == "TRAIN"
+
+
+def test_all_validation_failures_are_retained_without_running_oos() -> None:
+    calls = []
+
+    def fit(_context):  # type: ignore[no-untyped-def]
+        return b"fit", b"base"
+
+    def validate(context, _candidate):  # type: ignore[no-untyped-def]
+        return Decimal(context.get(date(2024, 1, 4)))
+
+    def execute(_context, _config):  # type: ignore[no-untyped-def]
+        calls.append("OOS")
+        return b"impossible"
+
+    candidates = (ParameterCandidate("b", b"2"), ParameterCandidate("a", b"1"))
+    result = run_walk_forward((windows(1),), {}, candidates, fit, validate, execute)
+    record = result.records[0]
+    assert not record.succeeded and record.selection is None and record.oos is None
+    assert record.failure_stage == "VALIDATION" and calls == []
+    assert len(record.parameter_space_identity) == 64
+    assert tuple(item.candidate_id for item in record.validation_evaluations) == (
+        "a",
+        "b",
+    )
+    assert len(record.validation_evaluations) == len(candidates)

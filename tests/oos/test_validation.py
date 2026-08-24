@@ -1,8 +1,14 @@
 from datetime import date
 from decimal import Decimal
 
+import pytest
+
 from stock_quant.oos.train import FittedArtifact
-from stock_quant.oos.validation import ParameterCandidate, run_validation
+from stock_quant.oos.validation import (
+    ParameterCandidate,
+    ValidationFailedError,
+    run_validation,
+)
 from stock_quant.oos.windows import OOSWindowSet, TimeWindow
 
 
@@ -58,3 +64,19 @@ def test_validation_context_rejects_train_and_oos_access_and_retains_failures() 
         "BoundedAccessError",
         "BoundedAccessError",
     )
+
+
+def test_all_failed_candidates_raise_typed_complete_ordered_audit() -> None:
+    candidates = (ParameterCandidate("z", b"2"), ParameterCandidate("a", b"1"))
+
+    def fail(context, candidate):  # type: ignore[no-untyped-def]
+        context.get(date(2024, 1, 5))
+        return Decimal(candidate.config.decode())
+
+    with pytest.raises(ValidationFailedError) as captured:
+        run_validation(WINDOWS, {}, FITTED, candidates, fail)
+    error = captured.value
+    assert len(error.parameter_space_identity) == 64
+    assert tuple(item.candidate_id for item in error.evaluations) == ("a", "z")
+    assert all(item.failure_type == "BoundedAccessError" for item in error.evaluations)
+    assert all(len(item.config_identity) == 64 for item in error.evaluations)

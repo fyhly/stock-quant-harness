@@ -53,6 +53,19 @@ class CandidateEvaluation:
     failure_message: str
 
 
+class ValidationFailedError(RuntimeError):
+    """All predefined candidates failed, with the full audit trail retained."""
+
+    def __init__(
+        self,
+        parameter_space_identity: str,
+        evaluations: Tuple[CandidateEvaluation, ...],
+    ) -> None:
+        super().__init__("all predefined candidates failed validation")
+        self.parameter_space_identity = parameter_space_identity
+        self.evaluations = evaluations
+
+
 @dataclass(frozen=True)
 class FrozenSelection:
     window_identity: str
@@ -103,7 +116,7 @@ def run_validation(
             )
     successful = [record for record in records if record.succeeded]
     if not successful:
-        raise ValueError("all predefined candidates failed validation")
+        raise ValidationFailedError(space_identity, tuple(records))
     best = min(successful, key=lambda item: (-item.score, item.candidate_id))  # type: ignore[operator]
     selected = next(item for item in ordered if item.candidate_id == best.candidate_id)
     return FrozenSelection(

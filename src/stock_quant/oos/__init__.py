@@ -13,6 +13,7 @@ from stock_quant.oos.validation import (
     FrozenSelection,
     ParameterCandidate,
     ValidationContext,
+    ValidationFailedError,
     run_validation,
 )
 from stock_quant.oos.oos_runner import OOSContext, OOSRecord, run_oos
@@ -57,6 +58,7 @@ __all__ = [
     "FrozenSelection",
     "ParameterCandidate",
     "ValidationContext",
+    "ValidationFailedError",
     "run_validation",
     "OOSContext",
     "OOSRecord",

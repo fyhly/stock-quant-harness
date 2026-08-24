@@ -8,9 +8,11 @@ from typing import Callable, Mapping, Optional, Tuple, TypeVar
 from stock_quant.oos.oos_runner import OOSContext, OOSRecord, run_oos
 from stock_quant.oos.train import FittedArtifact, TrainContext, TrainRecord, run_train
 from stock_quant.oos.validation import (
+    CandidateEvaluation,
     FrozenSelection,
     ParameterCandidate,
     ValidationContext,
+    ValidationFailedError,
     run_validation,
 )
 from stock_quant.oos.windows import OOSWindowSet
@@ -24,6 +26,8 @@ class WalkForwardWindowRecord:
     window_identity: str
     train: TrainRecord
     selection: Optional[FrozenSelection]
+    parameter_space_identity: str
+    validation_evaluations: Tuple[CandidateEvaluation, ...]
     oos: Optional[OOSRecord]
     succeeded: bool
     failure_stage: str
@@ -61,6 +65,8 @@ def run_walk_forward(
                     window.identity,
                     trained,
                     None,
+                    "",
+                    (),
                     None,
                     False,
                     "TRAIN",
@@ -73,10 +79,18 @@ def run_walk_forward(
             selection = run_validation(
                 window, data, trained.fitted, candidates, validate
             )
-        except Exception as exc:
+        except ValidationFailedError as exc:
             records.append(
                 WalkForwardWindowRecord(
-                    window.identity, trained, None, None, False, "VALIDATION", str(exc)
+                    window.identity,
+                    trained,
+                    None,
+                    exc.parameter_space_identity,
+                    exc.evaluations,
+                    None,
+                    False,
+                    "VALIDATION",
+                    str(exc),
                 )
             )
             continue
@@ -86,6 +100,8 @@ def run_walk_forward(
                 window.identity,
                 trained,
                 selection,
+                selection.parameter_space_identity,
+                selection.evaluations,
                 oos,
                 oos.succeeded,
                 "" if oos.succeeded else "OOS",
