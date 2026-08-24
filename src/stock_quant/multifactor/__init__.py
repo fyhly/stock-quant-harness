@@ -13,6 +13,11 @@ from stock_quant.multifactor.neutralize import (
     NeutralizedScore,
     neutralize_scores,
 )
+from stock_quant.multifactor.baselines import (
+    BaselineAllocationError,
+    BaselineCandidate,
+    baseline_allocators,
+)
 
 __all__ = [
     "CompositeScore",
@@ -24,4 +29,7 @@ __all__ = [
     "NeutralizationError",
     "NeutralizedScore",
     "neutralize_scores",
+    "BaselineAllocationError",
+    "BaselineCandidate",
+    "baseline_allocators",
 ]
