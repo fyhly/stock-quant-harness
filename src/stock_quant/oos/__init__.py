@@ -16,6 +16,11 @@ from stock_quant.oos.validation import (
     run_validation,
 )
 from stock_quant.oos.oos_runner import OOSContext, OOSRecord, run_oos
+from stock_quant.oos.walk_forward import (
+    WalkForwardResult,
+    WalkForwardWindowRecord,
+    run_walk_forward,
+)
 
 __all__ = [
     "OOSWindowSet",
@@ -34,4 +39,7 @@ __all__ = [
     "OOSContext",
     "OOSRecord",
     "run_oos",
+    "WalkForwardResult",
+    "WalkForwardWindowRecord",
+    "run_walk_forward",
 ]
