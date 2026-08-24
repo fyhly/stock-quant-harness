@@ -20,6 +20,12 @@ from stock_quant.backtest.constraints import (
     RejectionCode,
     SuspensionConstraint,
 )
+from stock_quant.backtest.costs import (
+    calculate_trading_costs,
+    TradingCostBreakdown,
+    TradingCostRule,
+    TradingCostSchedule,
+)
 from stock_quant.backtest.timeline import (
     DeterministicTimeline,
     EventKind,
@@ -48,6 +54,7 @@ __all__ = [
     "AccountValuation",
     "book_buy",
     "book_sell",
+    "calculate_trading_costs",
     "credit_corporate_action_lot",
     "ConstraintDecision",
     "EventKind",
@@ -71,5 +78,8 @@ __all__ = [
     "T1SellabilityError",
     "TimelineEvent",
     "TradeAccountingEntry",
+    "TradingCostBreakdown",
+    "TradingCostRule",
+    "TradingCostSchedule",
     "value_account",
 ]
