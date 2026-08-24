@@ -13,6 +13,13 @@ from stock_quant.research.metrics import (
     StandardMetrics,
     standard_metrics,
 )
+from stock_quant.research.factor_analytics import (
+    DailyFactorAnalytics,
+    FactorAnalyticsError,
+    FactorPoint,
+    QuantileSummary,
+    factor_analytics,
+)
 
 __all__ = [
     "RunId",
@@ -29,4 +36,9 @@ __all__ = [
     "MetricInputError",
     "StandardMetrics",
     "standard_metrics",
+    "DailyFactorAnalytics",
+    "FactorAnalyticsError",
+    "FactorPoint",
+    "QuantileSummary",
+    "factor_analytics",
 ]
