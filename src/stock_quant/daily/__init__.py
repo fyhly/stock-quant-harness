@@ -25,6 +25,7 @@ from stock_quant.daily.risk_view import (
     DailyPortfolioResearchView,
     generate_portfolio_risk_view,
 )
+from stock_quant.daily.report import DailyResearchReport, render_daily_report
 
 __all__ = ["DailyDataUpdate", "DailyUpdateError", "run_daily_update"]
 __all__ += [
@@ -44,4 +45,6 @@ __all__ += [
     "generate_daily_candidates",
     "DailyPortfolioResearchView",
     "generate_portfolio_risk_view",
+    "DailyResearchReport",
+    "render_daily_report",
 ]
