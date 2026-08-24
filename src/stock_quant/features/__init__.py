@@ -8,6 +8,7 @@ from stock_quant.features.api import (
     FeatureResult,
     FeatureScope,
 )
+from stock_quant.features.momentum import PriceObservation, trailing_return
 
 __all__ = [
     "build_feature_result",
@@ -16,4 +17,6 @@ __all__ = [
     "FeatureRequest",
     "FeatureResult",
     "FeatureScope",
+    "PriceObservation",
+    "trailing_return",
 ]
