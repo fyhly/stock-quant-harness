@@ -18,9 +18,15 @@ from stock_quant.actions.shares import (
     BonusShareAdjustment,
     FractionalSharePolicy,
 )
+from stock_quant.actions.rights import (
+    apply_rights_issue,
+    RightsElection,
+    RightsIssueAdjustment,
+)
 
 __all__ = [
     "apply_cash_dividend",
+    "apply_rights_issue",
     "apply_bonus_shares",
     "BonusShareEvent",
     "BonusShareAdjustment",
@@ -32,4 +38,6 @@ __all__ = [
     "FlatDividendTaxPolicy",
     "FractionalSharePolicy",
     "RightsIssue",
+    "RightsElection",
+    "RightsIssueAdjustment",
 ]
