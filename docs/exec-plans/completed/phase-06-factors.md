@@ -1,6 +1,6 @@
 # Phase 6 ExecPlan — Features / Factors
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -56,4 +56,25 @@ Each milestone: focused Ruff/Mypy/tests plus cutoff, leakage, window, missing an
 
 ## Evidence
 
-Pending implementation and review.
+- M6.1–M6.8 — PASS in commits `438e676`, `06579c6`, `8188e02`,
+  `89e026d`, `ec269eb`, `8490027`, `d612356`, `ac8d31c`; 19 focused feature
+  tests plus Ruff/Mypy passed.
+- Review confirmed injected-session trailing windows, decision-cutoff rejection,
+  announcement/revision point-in-time financial selection, historical shares,
+  deterministic same-date-only cross-sectional transforms and explicit missing
+  policies.
+- Initial Phase Gate failed at collection because two test directories contained
+  `test_quality.py`. Bounded fix `d687184` enabled pytest importlib isolation;
+  no test was renamed, skipped or deleted, and both modules collect.
+- Re-run Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS,
+  Mypy PASS (49 sources), tests PASS (192), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M6.1–M6.8: PASS
+- Phase 6 Review: PASS after Gate remediation
+- No Provider/network/strategy/portfolio/backtest or Phase 7 scope.
+- Residual risks: caller supplies PIT-aligned single-period fundamentals (no TTM
+  conversion yet); volatility formula is explicit population/simple-return;
+  share staleness uses calendar days; cross-section policy set is intentionally
+  minimal.
