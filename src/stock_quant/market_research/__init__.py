@@ -5,9 +5,19 @@ from stock_quant.market_research.universe_gate import (
     MarketUniverseGateEvidence,
     evaluate_market_universe,
 )
+from stock_quant.market_research.runner import (
+    MarketBatchResult,
+    MarketItemRecord,
+    MarketWorkItem,
+    run_cross_sectional_batch,
+)
 
 __all__ = [
     "MarketUniverseGateError",
     "MarketUniverseGateEvidence",
     "evaluate_market_universe",
+    "MarketBatchResult",
+    "MarketItemRecord",
+    "MarketWorkItem",
+    "run_cross_sectional_batch",
 ]
