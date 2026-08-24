@@ -20,6 +20,9 @@ dev = [
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+stock_quant = ["py.typed"]
+
 [tool.pytest.ini_options]
 addopts = "--strict-config --strict-markers"
 testpaths = ["tests"]
@@ -32,4 +35,3 @@ line-length = 88
 python_version = "3.9"
 strict = true
 packages = ["stock_quant"]
-

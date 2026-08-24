@@ -10,5 +10,9 @@ implemented.
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -e '.[dev]'
-pytest
+make verify
 ```
+
+`make test` runs the test suite, `make eval` runs executable acceptance
+evaluations, and `make verify` aggregates lint, type checking, tests, and evals.
+All commands are offline and return nonzero when a check fails.
