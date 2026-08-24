@@ -1,6 +1,6 @@
 # Phase 0 ExecPlan — Harness / 工程基座
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -106,4 +106,33 @@ V1 is research-only. No brokerage/account connection, browser/client automation,
 
 ## Evidence
 
-Pending implementation and review.
+- M0.1 — PASS: commit `63ad60f`; import smoke test passed; skeleton and
+  constrained Python metadata reviewed with no Phase 1 business logic.
+- M0.2 — PASS: commit `f96a8d7`; constitution contains mission, risk levels,
+  OFFLINE/CRITICAL stop boundary, and A-share temporal/leakage invariants.
+- M0.3 — PASS: commit `fb72bd6`; architecture responsibilities, dependency
+  direction, research/execution separation, and explicit time semantics reviewed.
+- M0.4 — PASS: commit `f9894dd`; active/queued/completed lifecycle and template
+  exist; exactly one Platform plan was active; queued work is explicitly not
+  authorization.
+- M0.5 — PASS: commit `69c1d32`; short branches, small commits, review,
+  minimum-sufficient verification, and definition of done are explicit.
+- M0.6 — PASS: commit `090426b`; `make verify` aggregates Ruff, Mypy, tests,
+  and evals and propagates failure. Executor observed an initial nonzero type
+  failure before adding `py.typed`, then passed the corrected closure.
+- Main-Agent Phase Gate rerun: `make verify` PASS on 2026-08-24; Ruff PASS,
+  Mypy PASS (1 source), tests PASS (1), evals PASS (1). This single run is the
+  required non-duplicative full closure because `verify` includes every public
+  check.
+- Scope review: six ordered milestone commits, no later-phase implementation,
+  no live/broker side effect, and the extracted startup pack remains untracked.
+
+## Review decision
+
+- Milestone Reviews M0.1–M0.6: PASS
+- Phase 0 Review: PASS
+- Residual risk: local verification requires the pinned development tools to be
+  installed in `.venv`; runtime dependencies are empty and verification has no
+  network dependency.
+- Phase 1 entry condition: satisfied only after this completed plan is archived
+  and an explicit Phase 1 active ExecPlan is created.
