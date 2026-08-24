@@ -19,6 +19,7 @@ from stock_quant.provider.history import (
 )
 from stock_quant.provider.actions import acquire_corporate_actions, CorporateActionBatch
 from stock_quant.provider.financial import acquire_financials, FinancialObservation
+from stock_quant.provider.sync import IncrementalSync, SyncManifest, SyncPlan
 
 __all__ = [
     "acquire_daily",
@@ -39,4 +40,7 @@ __all__ = [
     "EffectiveHistoryRecord",
     "CorporateActionBatch",
     "FinancialObservation",
+    "IncrementalSync",
+    "SyncManifest",
+    "SyncPlan",
 ]
