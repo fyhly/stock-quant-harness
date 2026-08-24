@@ -8,6 +8,13 @@ from stock_quant.oos.train import (
     TrainRecord,
     run_train,
 )
+from stock_quant.oos.validation import (
+    CandidateEvaluation,
+    FrozenSelection,
+    ParameterCandidate,
+    ValidationContext,
+    run_validation,
+)
 
 __all__ = [
     "OOSWindowSet",
@@ -18,4 +25,9 @@ __all__ = [
     "TrainContext",
     "TrainRecord",
     "run_train",
+    "CandidateEvaluation",
+    "FrozenSelection",
+    "ParameterCandidate",
+    "ValidationContext",
+    "run_validation",
 ]
