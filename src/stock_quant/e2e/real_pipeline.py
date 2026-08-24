@@ -23,6 +23,26 @@ from stock_quant.domain import (
     TradingSession,
 )
 from stock_quant.features import PriceObservation, trailing_return, trailing_volatility
+from stock_quant.portfolio import equal_weight
+from stock_quant.risk import (
+    approved_rebalance_intent,
+    create_risk_request,
+    PITClassification,
+    RiskBudgets,
+    RiskConfig,
+    RiskDecision,
+    run_risk_engine,
+)
+from stock_quant.strategy import (
+    BoundaryTiePolicy,
+    create_score_intent,
+    FeatureScore,
+    RankMissingPolicy,
+    rebalance_schedule,
+    RebalanceFrequency,
+    select_top_n,
+)
+from stock_quant.backtest import RebalanceIntent
 from stock_quant.universe import (
     HistoricalLiquidityFilter,
     HistoricalSTFilter,
@@ -53,6 +73,12 @@ class RealFeatureClosure:
     decision_cutoff: datetime
     rows: Tuple[RealFeatureRow, ...]
     lineage: str
+
+
+@dataclass(frozen=True)
+class RealAllocationClosure:
+    risk_decision: RiskDecision
+    rebalance_intent: RebalanceIntent
 
 
 def load_real_bars(
@@ -184,4 +210,70 @@ def compute_real_features(root: Path, decision_day: TradingDay) -> RealFeatureCl
     manifest = json.loads((root / "manifest.json").read_text())
     return RealFeatureClosure(
         decision_day, cutoff, tuple(output), manifest["normalized_sha256"]
+    )
+
+
+def build_real_allocation(
+    root: Path, decision_day: TradingDay
+) -> RealAllocationClosure:
+    calendar, _ = load_real_bars(root)
+    monthly = rebalance_schedule(
+        calendar,
+        start=calendar.trading_days[0],
+        end=calendar.trading_days[-1],
+        frequency=RebalanceFrequency.MONTHLY,
+    )
+    if decision_day not in {item.decision_day for item in monthly}:
+        raise ValueError("decision day is not a monthly scheduled close")
+    features = compute_real_features(root, decision_day)
+    feature_scores = tuple(
+        FeatureScore(
+            row.security_id, row.momentum_20, features.decision_cutoff, features.lineage
+        )
+        for row in features.rows
+    )
+    score_intent = create_score_intent(
+        decision_day,
+        features.decision_cutoff,
+        feature_scores,
+        universe_identity=features.lineage,
+        config_identity="1" * 64,
+        data_identity=features.lineage,
+    )
+    selected = select_top_n(
+        score_intent.scores,
+        top_n=1,
+        ascending=False,
+        missing_policy=RankMissingPolicy.REJECT,
+        boundary_ties=BoundaryTiePolicy.SECURITY_ID,
+    )
+    portfolio = equal_weight(
+        selected.selected, cash_target=Decimal("0.2"), quantum=Decimal("0.0001")
+    )
+    classifications = tuple(
+        PITClassification(row.security_id, decision_day, "BANK", "2" * 64)
+        for row in portfolio.weights
+    )
+    request = create_risk_request(
+        decision_day,
+        portfolio,
+        equal_weight((), cash_target=Decimal(1), quantum=Decimal("0.0001")),
+        classifications,
+        config_identity="3" * 64,
+        upstream_identity=features.lineage,
+    )
+    decision = run_risk_engine(
+        request,
+        RiskConfig(
+            Decimal("0.8"),
+            Decimal("0.8"),
+            Decimal(1),
+            Decimal("0.2"),
+            Decimal("0.8"),
+            Decimal("0.0001"),
+        ),
+        RiskBudgets((), ()),
+    )
+    return RealAllocationClosure(
+        decision, approved_rebalance_intent("real-monthly-v1", decision)
     )
