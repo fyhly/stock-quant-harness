@@ -19,6 +19,12 @@ from stock_quant.market_research.exposure import (
     ExposurePoint,
     exposure_attribution,
 )
+from stock_quant.market_research.failures import (
+    FailureEvidence,
+    FailureRegistry,
+    FailureRegistryError,
+    render_market_summary,
+)
 
 __all__ = [
     "MarketUniverseGateError",
@@ -36,4 +42,8 @@ __all__ = [
     "ExposureAttribution",
     "ExposurePoint",
     "exposure_attribution",
+    "FailureEvidence",
+    "FailureRegistry",
+    "FailureRegistryError",
+    "render_market_summary",
 ]
