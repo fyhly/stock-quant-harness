@@ -1,6 +1,6 @@
 # Phase 16 ExecPlan — Daily Selection / Rebalance Research
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -56,4 +56,22 @@ Focused Ruff/Mypy/tests plus failure-recovery, PIT/leakage, no-downstream-on-qua
 
 ## Evidence
 
-Pending implementation and review.
+- M16.1–M16.8 — PASS in commits `048deb7`, `bca68fe`, `39de133`,
+  `439a581`, `3bb9655`, `e47319f`, `91345c3`, `539b1f5`; 16 focused daily
+  tests plus Ruff/Mypy passed.
+- Review confirmed staged idempotent update, fatal-quality zero downstream calls,
+  PIT Universe/factors, complete candidate reasons, RiskDecision-only portfolio
+  view, manual-decision reports and local-input fingerprinted replay.
+- Forbidden scan found no production Daily import/reference to backtest execution,
+  broker, orders, fills or approved rebalance intent.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (121 sources), tests PASS (325), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M16.1–M16.8: PASS
+- Phase 16 Review: PASS
+- No Phase 17 expansion or real-trading side effect. Proceed only to V1 Final Audit.
+- Residual: daily failed aggregate state is not separately persisted; per-factor
+  failures remain explicit; replay callback capability isolation also requires
+  runtime audit of injected implementations.
