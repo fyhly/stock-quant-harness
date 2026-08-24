@@ -29,6 +29,12 @@ from stock_quant.oos.stitch import (
     StitchedOOSResult,
     stitch_oos_results,
 )
+from stock_quant.oos.stability import (
+    StabilityError,
+    StabilitySummary,
+    StabilityWindow,
+    stability_summary,
+)
 
 __all__ = [
     "OOSWindowSet",
@@ -56,4 +62,8 @@ __all__ = [
     "StitchedEquityPoint",
     "StitchedOOSResult",
     "stitch_oos_results",
+    "StabilityError",
+    "StabilitySummary",
+    "StabilityWindow",
+    "stability_summary",
 ]
