@@ -2,12 +2,6 @@
 
 from decimal import Decimal, ROUND_DOWN
 
-from stock_quant.backtest.rebalance import (
-    create_rebalance_intent,
-    RebalanceIntent,
-    TargetWeight,
-)
-from stock_quant.domain import TradingDay
 from stock_quant.portfolio.equal_weight import (
     PortfolioConstructionError,
     PortfolioWeight,
@@ -67,18 +61,4 @@ def apply_basic_constraints(
         ),
         Decimal(1) - constrained_gross,
         residual,
-    )
-
-
-def to_rebalance_intent(
-    intent_id: str,
-    decision_day: TradingDay,
-    portfolio: PortfolioWeights,
-) -> RebalanceIntent:
-    """Emit only Phase 5 target intent; fills remain outside this layer."""
-
-    return create_rebalance_intent(
-        intent_id,
-        decision_day,
-        (TargetWeight(row.security_id, row.weight) for row in portfolio.weights),
     )

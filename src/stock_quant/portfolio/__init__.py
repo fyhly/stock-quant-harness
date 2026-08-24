@@ -2,7 +2,6 @@
 
 from stock_quant.portfolio.constraints import (
     apply_basic_constraints,
-    to_rebalance_intent,
 )
 
 from stock_quant.portfolio.equal_weight import (
@@ -29,6 +28,5 @@ __all__ = [
     "PortfolioScore",
     "ScoreMissingPolicy",
     "score_weight",
-    "to_rebalance_intent",
     "ZeroScorePolicy",
 ]

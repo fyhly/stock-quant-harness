@@ -9,6 +9,14 @@ from stock_quant.risk.api import (
     RiskRequest,
 )
 from stock_quant.risk.exposure import apply_cash_exposure_limits
+from stock_quant.risk.engine import (
+    approved_rebalance_intent,
+    NameRiskBudget,
+    RiskBudgets,
+    RiskConfig,
+    run_risk_engine,
+    SectorRiskBudget,
+)
 from stock_quant.risk.single_name import apply_single_name_limit
 from stock_quant.risk.sector import apply_sector_limit
 from stock_quant.risk.turnover import apply_turnover_limit, TurnoverResult
@@ -18,11 +26,17 @@ __all__ = [
     "apply_single_name_limit",
     "apply_sector_limit",
     "apply_cash_exposure_limits",
+    "approved_rebalance_intent",
     "apply_turnover_limit",
     "PITClassification",
+    "NameRiskBudget",
     "RiskAdjustment",
     "RiskContractError",
     "RiskDecision",
+    "RiskBudgets",
+    "RiskConfig",
     "RiskRequest",
+    "run_risk_engine",
+    "SectorRiskBudget",
     "TurnoverResult",
 ]

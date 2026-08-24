@@ -3,7 +3,6 @@ from decimal import Decimal
 
 import pytest
 
-from stock_quant.backtest import RebalanceIntent
 from stock_quant.domain import Exchange, SecurityId, TradingDay
 from stock_quant.portfolio import (
     apply_basic_constraints,
@@ -12,7 +11,6 @@ from stock_quant.portfolio import (
     score_weight,
     ScoreMissingPolicy,
     NegativeScorePolicy,
-    to_rebalance_intent,
     ZeroScorePolicy,
 )
 from stock_quant.strategy import (
@@ -63,7 +61,7 @@ def test_boundaries_extremes_residual_and_infeasible_inputs() -> None:
         )
 
 
-def test_strategy_to_portfolio_to_rebalance_intent_without_fill() -> None:
+def test_strategy_to_portfolio_constraint_boundary_without_fill() -> None:
     feature_rows = tuple(
         FeatureScore(sid, Decimal(index + 1), NOW, HASH)
         for index, sid in enumerate(IDS)
@@ -103,9 +101,6 @@ def test_strategy_to_portfolio_to_rebalance_intent_without_fill() -> None:
         gross_cap=Decimal("0.9"),
         quantum=Decimal("0.0001"),
     )
-    intent = to_rebalance_intent("rebalance-1", DAY, constrained)
-    assert isinstance(intent, RebalanceIntent)
-    assert intent.decision_day == DAY
-    assert sum((target.weight for target in intent.targets), Decimal(0)) <= Decimal(
-        "0.9"
-    )
+    assert sum(
+        (target.weight for target in constrained.weights), Decimal(0)
+    ) <= Decimal("0.9")
