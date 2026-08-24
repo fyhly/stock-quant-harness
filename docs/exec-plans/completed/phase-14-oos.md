@@ -1,6 +1,6 @@
 # Phase 14 ExecPlan — Walk-Forward / OOS
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -56,4 +56,22 @@ Focused Ruff/Mypy/tests plus automated forbidden-access, overlap, freeze, failur
 
 ## Evidence
 
-Pending implementation and review.
+- M14.1–M14.8 — PASS in commits `aad49c0`, `cef2620`, `650156d`,
+  `639ebeb`, `1bbd072`, `174fb76`, `47f85c3`, `10e5c9b`; focused OOS tests
+  plus Ruff/Mypy passed.
+- Review confirmed half-open isolated windows, predefined finite selection,
+  frozen configs, OOS-only contexts, non-overlapping walk-forward/stitching,
+  complete stability failures and fail-closed Candidate criteria.
+- Gate review found all-failed validation lost per-candidate detail. Fix
+  `d762938` retains ordered full evaluations and parameter-space identity while
+  forbidding selection/OOS execution.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (105 sources), tests PASS (297), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M14.1–M14.8: PASS after Gate remediation
+- Phase 14 Review: PASS
+- Residual: Python callbacks could close over external data, so Candidate Gate
+  also requires explicit context-isolation audit evidence; expected dates are
+  supplied by the PIT calendar.
