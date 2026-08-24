@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import shutil
 import tempfile
+from types import MappingProxyType
 from typing import Any, Dict, Mapping
 
 
@@ -48,6 +49,22 @@ def _canonical_json(value: Mapping[str, Any]) -> bytes:
     ).encode("utf-8")
 
 
+def _freeze_json(value: Any) -> Any:
+    if isinstance(value, dict):
+        return MappingProxyType({key: _freeze_json(item) for key, item in value.items()})
+    if isinstance(value, list):
+        return tuple(_freeze_json(item) for item in value)
+    return value
+
+
+def _thaw_json(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        return {key: _thaw_json(item) for key, item in value.items()}
+    if isinstance(value, tuple):
+        return [_thaw_json(item) for item in value]
+    return value
+
+
 @dataclass(frozen=True)
 class RawArtifactMetadata:
     """Canonical provenance supplied alongside opaque raw bytes."""
@@ -67,7 +84,7 @@ class RawArtifactMetadata:
             raise InvalidArtifactError("query must be a mapping")
         query_copy: Dict[str, Any] = dict(self.query)
         _validate_json(query_copy)
-        object.__setattr__(self, "query", query_copy)
+        object.__setattr__(self, "query", _freeze_json(query_copy))
         if not isinstance(self.fetched_at, datetime):
             raise InvalidArtifactError("fetched_at must be a datetime")
         if self.fetched_at.tzinfo is None or self.fetched_at.utcoffset() is None:
@@ -77,7 +94,7 @@ class RawArtifactMetadata:
         fetched_utc = self.fetched_at.astimezone(timezone.utc)
         return {
             "fetched_at": fetched_utc.isoformat(timespec="microseconds"),
-            "query": self.query,
+            "query": _thaw_json(self.query),
             "schema_name": self.schema_name,
             "schema_version": self.schema_version,
             "source": self.source,

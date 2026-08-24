@@ -5,6 +5,7 @@ from stock_quant.data.bars import (
     DailyBar,
     DailyBarSeries,
 )
+from stock_quant.data.lineage import LineageRecord, LineageStore
 from stock_quant.data.raw import (
     ArtifactIntegrityError,
     InvalidArtifactError,
@@ -29,6 +30,8 @@ __all__ = [
     "DailyBarSeries",
     "DailyBarParquetStore",
     "InvalidArtifactError",
+    "LineageRecord",
+    "LineageStore",
     "NormalizedArtifactRef",
     "QualityIssue",
     "QualityIssueCode",

@@ -91,3 +91,14 @@ def test_invalid_metadata_and_traversal_reference_are_rejected(tmp_path: Path) -
         metadata(query={"unstable": 1.2})
     with pytest.raises(InvalidArtifactError, match="SHA-256"):
         RawArtifactStore(tmp_path).read("../../etc/passwd")
+
+
+def test_metadata_query_is_recursively_immutable() -> None:
+    value = metadata(query={"symbols": ["600000.XSHG"]})
+
+    with pytest.raises(TypeError):
+        value.query["new"] = "mutation"  # type: ignore[index]
+    symbols = value.query["symbols"]
+    assert isinstance(symbols, tuple)
+    with pytest.raises(TypeError):
+        symbols[0] = "000001.XSHE"  # type: ignore[index]
