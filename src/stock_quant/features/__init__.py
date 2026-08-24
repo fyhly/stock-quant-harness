@@ -8,6 +8,15 @@ from stock_quant.features.api import (
     FeatureResult,
     FeatureScope,
 )
+from stock_quant.features.cross_section import (
+    ConstantPolicy,
+    CrossSectionResult,
+    CrossSectionValue,
+    cross_sectional_transform,
+    MissingPolicy,
+    TiePolicy,
+    TransformedValue,
+)
 from stock_quant.features.momentum import PriceObservation, trailing_return
 from stock_quant.features.reversal import short_term_reversal
 from stock_quant.features.quality import (
@@ -35,6 +44,10 @@ from stock_quant.features.value import (
 
 __all__ = [
     "build_feature_result",
+    "ConstantPolicy",
+    "CrossSectionResult",
+    "CrossSectionValue",
+    "cross_sectional_transform",
     "FeatureContractError",
     "FeatureObservation",
     "FeatureRequest",
@@ -46,6 +59,7 @@ __all__ = [
     "quality_factors",
     "QualityFactors",
     "MissingReturnPolicy",
+    "MissingPolicy",
     "short_term_reversal",
     "ShareObservation",
     "SizeLiquidityFactors",
@@ -53,6 +67,8 @@ __all__ = [
     "StatementObservation",
     "trailing_return",
     "trailing_volatility",
+    "TiePolicy",
+    "TransformedValue",
     "ValuationObservation",
     "ValueFactors",
     "value_factors",
