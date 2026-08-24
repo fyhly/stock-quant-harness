@@ -1,6 +1,6 @@
 # Phase 5 ExecPlan — A-share Backtest Engine
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -66,4 +66,23 @@ Every milestone requires focused Ruff/Mypy/tests and targeted anti-future, accou
 
 ## Evidence
 
-Pending implementation and review.
+- M5.1–M5.10 — PASS in ordered commits `0b751e2`, `349184a`, `614144c`,
+  `996ff93`, `cbfa2a7`, `4d27292`, `82e36bf`, `275780e`, `d110191`, `585fc39`.
+- Focused Ruff/Mypy/tests/diff checks passed per milestone; all 33 backtest tests
+  passed together. Review confirmed deterministic event keys, next-session fills,
+  exact accounting, injected-calendar T+1, fail-closed suspension/limits,
+  versioned fees, raw-open liquidity/cash/lot constraints, staged/idempotent
+  actions, intent-only rebalance, and immutable replay fingerprints.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (40 sources), tests PASS (173), evals PASS (1); single complete closure.
+
+## Review decision
+
+- Milestone Reviews M5.1–M5.10: PASS
+- Phase 5 Review: PASS
+- No future/same-bar fills, adjusted execution prices, Provider/network/broker or
+  Phase 6 scope.
+- Residual risks: injected rule schedules/references remain trusted inputs; no
+  universal execution-price tick quantization; Phase 4 and account position
+  models are timeline-gated rather than fully unified; fee audit combines fills
+  with the cash ledger.
