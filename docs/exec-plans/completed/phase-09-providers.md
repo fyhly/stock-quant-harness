@@ -1,6 +1,6 @@
 # Phase 9 ExecPlan — Real-data Provider
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -55,4 +55,24 @@ Focused Ruff/Mypy/tests plus raw-first ordering, schema drift, PIT, idempotence,
 
 ## Evidence
 
-Pending implementation and review.
+- M9.1–M9.7 — PASS in commits `22f4134`, `56797a6`, `f20bc3f`,
+  `166f66d`, `15f8a75`, `1597afc`, `d2a00f2`; 14 focused tests plus
+  Ruff/Mypy passed. Exact responses persist Raw before parsing, financial
+  announcement/revisions remain available, and sync is staged/idempotent.
+- Review rejected an unverifiable assumed Tushare rights schema. Fix `2241fbc`
+  restricts the adapter to documented dividend cash/bonus/transfer fields,
+  returns CapabilityUnavailable before any rights request, and forces HTTPS.
+- Credentials are runtime-only/redacted; tests use FakeTransport; Backtest has
+  no Provider import or network path.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (72 sources), tests PASS (233), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M9.1–M9.7: PASS after Gate remediation
+- Phase 9 Review: PASS
+- Provider failure cannot publish normalized state; report-period-only financial
+  rows and current-only historical membership are rejected.
+- Residual risks: Tushare rights ingestion is explicitly unavailable; financial
+  revision availability conservatively uses first fetch time where the source
+  lacks row timestamps; external publish callbacks must honor staged atomicity.
