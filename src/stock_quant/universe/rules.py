@@ -5,7 +5,14 @@ from datetime import date
 from enum import Enum
 from typing import Mapping, Optional, Tuple
 
-from stock_quant.domain import ListingLifecycle, ListingStatus, SecurityId
+from stock_quant.domain import (
+    ListingLifecycle,
+    ListingStatus,
+    SecurityId,
+    STStatus,
+    STStatusHistory,
+    UnknownStatusError,
+)
 
 
 class ExclusionCode(str, Enum):
@@ -98,3 +105,75 @@ class ListingHistoryFilter:
                 )
             )
         return RuleDecision.include()
+
+
+@dataclass(frozen=True)
+class STEligibilityPolicy:
+    """Explicit versioned policy for special-treatment securities."""
+
+    version: str
+    allow_st: bool = False
+    allow_star_st: bool = False
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.version, str) or not self.version.strip():
+            raise ValueError("ST policy version must be non-empty")
+
+
+class HistoricalSTFilter:
+    """ST eligibility using only supplied effective-dated histories."""
+
+    def __init__(
+        self,
+        histories: Mapping[SecurityId, STStatusHistory],
+        policy: STEligibilityPolicy,
+    ) -> None:
+        copied = dict(histories)
+        if not isinstance(policy, STEligibilityPolicy):
+            raise TypeError("policy must be STEligibilityPolicy")
+        for security_id, history in copied.items():
+            if not isinstance(security_id, SecurityId):
+                raise TypeError("ST history keys must be SecurityId")
+            if not isinstance(history, STStatusHistory):
+                raise TypeError("ST histories must be STStatusHistory")
+        self._histories = copied
+        self.policy = policy
+
+    def evaluate(self, security_id: SecurityId, as_of: date) -> RuleDecision:
+        if type(as_of) is not date:
+            raise TypeError("as_of must be a date, not a datetime")
+        history = self._histories.get(security_id)
+        if history is None:
+            return self._unknown()
+        try:
+            status = history.as_of(as_of)
+        except UnknownStatusError:
+            return self._unknown()
+        allowed = status is STStatus.NORMAL
+        if status is STStatus.ST:
+            allowed = self.policy.allow_st
+        elif status is STStatus.STAR_ST:
+            allowed = self.policy.allow_star_st
+        if allowed:
+            return RuleDecision.include()
+        return RuleDecision.exclude(
+            Exclusion(
+                ExclusionCode.ST_STATUS,
+                "st_status",
+                "historical ST status is excluded by policy",
+                (
+                    ("policy_version", self.policy.version),
+                    ("status", status.value),
+                ),
+            )
+        )
+
+    @staticmethod
+    def _unknown() -> RuleDecision:
+        return RuleDecision.exclude(
+            Exclusion(
+                ExclusionCode.MISSING_ST_HISTORY,
+                "st_status",
+                "no supplied ST fact covers the as-of date",
+            )
+        )
