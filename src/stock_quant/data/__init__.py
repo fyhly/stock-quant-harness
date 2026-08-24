@@ -12,16 +12,28 @@ from stock_quant.data.raw import (
     RawArtifactRef,
     RawArtifactStore,
 )
+from stock_quant.data.quality import (
+    assess_daily_bars,
+    QualityIssue,
+    QualityIssueCode,
+    QualityReport,
+    QualitySeverity,
+)
 from stock_quant.data.storage import DailyBarParquetStore, NormalizedArtifactRef
 
 __all__ = [
     "ArtifactIntegrityError",
+    "assess_daily_bars",
     "DAILY_BAR_SCHEMA_VERSION",
     "DailyBar",
     "DailyBarSeries",
     "DailyBarParquetStore",
     "InvalidArtifactError",
     "NormalizedArtifactRef",
+    "QualityIssue",
+    "QualityIssueCode",
+    "QualityReport",
+    "QualitySeverity",
     "RawArtifactMetadata",
     "RawArtifactRef",
     "RawArtifactStore",
