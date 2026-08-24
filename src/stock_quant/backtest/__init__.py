@@ -14,6 +14,12 @@ from stock_quant.backtest.account import (
     TradeAccountingEntry,
     value_account,
 )
+from stock_quant.backtest.actions import (
+    ActionIntegrationState,
+    apply_pre_market_action,
+    capture_record_entitlement,
+    EligibleQuantitySnapshot,
+)
 from stock_quant.backtest.constraints import (
     ConstraintDecision,
     OrderSide,
@@ -59,14 +65,18 @@ __all__ = [
     "AccountError",
     "AccountState",
     "AccountValuation",
+    "ActionIntegrationState",
+    "apply_pre_market_action",
     "book_buy",
     "book_sell",
     "calculate_trading_costs",
+    "capture_record_entitlement",
     "credit_corporate_action_lot",
     "ConstraintDecision",
     "EventKind",
     "execute_next_open",
     "ExecutionOutcome",
+    "EligibleQuantitySnapshot",
     "EventPhase",
     "evaluate_price_limit",
     "fill_price_within_limits",
