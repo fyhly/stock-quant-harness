@@ -18,6 +18,10 @@ from stock_quant.multifactor.baselines import (
     BaselineCandidate,
     baseline_allocators,
 )
+from stock_quant.multifactor.risk_integration import (
+    RiskApprovedCandidate,
+    approve_multifactor_candidate,
+)
 
 __all__ = [
     "CompositeScore",
@@ -32,4 +36,6 @@ __all__ = [
     "BaselineAllocationError",
     "BaselineCandidate",
     "baseline_allocators",
+    "RiskApprovedCandidate",
+    "approve_multifactor_candidate",
 ]
