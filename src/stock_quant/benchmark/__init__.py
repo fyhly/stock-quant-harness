@@ -16,6 +16,11 @@ from stock_quant.benchmark.low_vol import (
 )
 from stock_quant.benchmark.value import ValueBenchmarkResult, run_value_benchmark
 from stock_quant.benchmark.quality import QualityBenchmarkResult, run_quality_benchmark
+from stock_quant.benchmark.technical import (
+    TechnicalBenchmarkResult,
+    TechnicalSignal,
+    run_technical_benchmarks,
+)
 
 __all__ = [
     "MomentumBenchmarkConfig",
@@ -30,4 +35,7 @@ __all__ = [
     "run_value_benchmark",
     "QualityBenchmarkResult",
     "run_quality_benchmark",
+    "TechnicalBenchmarkResult",
+    "TechnicalSignal",
+    "run_technical_benchmarks",
 ]
