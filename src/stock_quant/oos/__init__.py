@@ -35,6 +35,14 @@ from stock_quant.oos.stability import (
     StabilityWindow,
     stability_summary,
 )
+from stock_quant.oos.candidate_gate import (
+    CandidateCriteria,
+    CandidateDecision,
+    CandidateEvidence,
+    CandidateGateResult,
+    candidate_gate,
+    render_candidate_report,
+)
 
 __all__ = [
     "OOSWindowSet",
@@ -66,4 +74,10 @@ __all__ = [
     "StabilitySummary",
     "StabilityWindow",
     "stability_summary",
+    "CandidateCriteria",
+    "CandidateDecision",
+    "CandidateEvidence",
+    "CandidateGateResult",
+    "candidate_gate",
+    "render_candidate_report",
 ]
