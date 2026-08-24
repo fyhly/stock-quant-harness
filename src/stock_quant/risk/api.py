@@ -15,6 +15,12 @@ class RiskContractError(ValueError):
     pass
 
 
+class RiskInfeasibleError(RiskContractError):
+    def __init__(self, reasons: Tuple[str, ...]) -> None:
+        self.reasons = reasons
+        super().__init__("risk constraints infeasible: " + "; ".join(reasons))
+
+
 @dataclass(frozen=True, order=True)
 class PITClassification:
     security_id: SecurityId
@@ -61,9 +67,13 @@ def create_risk_request(
 ) -> RiskRequest:
     rows = tuple(sorted(classifications))
     ids = tuple(row.security_id for row in rows)
-    proposed_ids = {row.security_id for row in proposed.weights}
-    if ids != tuple(sorted(set(ids))) or set(ids) != proposed_ids:
-        raise RiskContractError("classifications must align uniquely to proposed names")
+    required_ids = {row.security_id for row in proposed.weights} | {
+        row.security_id for row in current.weights
+    }
+    if ids != tuple(sorted(set(ids))) or set(ids) != required_ids:
+        raise RiskContractError(
+            "classifications must align uniquely to portfolio names"
+        )
     if any(row.as_of != as_of for row in rows):
         raise RiskContractError("classification as-of mismatch")
     if any(

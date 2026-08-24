@@ -6,6 +6,7 @@ from stock_quant.risk.api import (
     RiskAdjustment,
     RiskContractError,
     RiskDecision,
+    RiskInfeasibleError,
     RiskRequest,
 )
 from stock_quant.risk.exposure import apply_cash_exposure_limits
@@ -33,6 +34,7 @@ __all__ = [
     "RiskAdjustment",
     "RiskContractError",
     "RiskDecision",
+    "RiskInfeasibleError",
     "RiskBudgets",
     "RiskConfig",
     "RiskRequest",

@@ -26,7 +26,7 @@ def apply_sector_limit(
     rows = tuple(classifications)
     mapping = {row.security_id: row for row in rows}
     ids = {row.security_id for row in portfolio.weights}
-    if len(mapping) != len(rows) or set(mapping) != ids:
+    if len(mapping) != len(rows) or not ids.issubset(mapping):
         raise RiskContractError("missing or duplicate sector history")
     if any(row.as_of != as_of for row in rows):
         raise RiskContractError("sector history as-of mismatch")
