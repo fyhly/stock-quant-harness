@@ -26,6 +26,12 @@ from stock_quant.daily.risk_view import (
     generate_portfolio_risk_view,
 )
 from stock_quant.daily.report import DailyResearchReport, render_daily_report
+from stock_quant.daily.replay import (
+    DailyReplayError,
+    DailyReplayResult,
+    DailyReplaySpec,
+    replay_daily_report,
+)
 
 __all__ = ["DailyDataUpdate", "DailyUpdateError", "run_daily_update"]
 __all__ += [
@@ -47,4 +53,8 @@ __all__ += [
     "generate_portfolio_risk_view",
     "DailyResearchReport",
     "render_daily_report",
+    "DailyReplayError",
+    "DailyReplayResult",
+    "DailyReplaySpec",
+    "replay_daily_report",
 ]
