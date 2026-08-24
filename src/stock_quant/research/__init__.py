@@ -7,6 +7,7 @@ from stock_quant.research.manifest import (
     ManifestIntegrityError,
     verify_manifest,
 )
+from stock_quant.research.artifacts import RunArtifactError, RunArtifacts, RunStore
 
 __all__ = [
     "RunId",
@@ -17,4 +18,7 @@ __all__ = [
     "ExperimentManifest",
     "ManifestIntegrityError",
     "verify_manifest",
+    "RunArtifactError",
+    "RunArtifacts",
+    "RunStore",
 ]
