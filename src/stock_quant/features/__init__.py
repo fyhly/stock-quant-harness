@@ -15,6 +15,12 @@ from stock_quant.features.volatility import (
     trailing_volatility,
     VolatilityResult,
 )
+from stock_quant.features.value import (
+    FundamentalObservation,
+    ValuationObservation,
+    ValueFactors,
+    value_factors,
+)
 
 __all__ = [
     "build_feature_result",
@@ -23,10 +29,14 @@ __all__ = [
     "FeatureRequest",
     "FeatureResult",
     "FeatureScope",
+    "FundamentalObservation",
     "PriceObservation",
     "MissingReturnPolicy",
     "short_term_reversal",
     "trailing_return",
     "trailing_volatility",
+    "ValuationObservation",
+    "ValueFactors",
+    "value_factors",
     "VolatilityResult",
 ]
