@@ -13,6 +13,7 @@ from stock_quant.universe.rules import (
     ListingHistoryFilter,
     RuleDecision,
     HistoricalSTFilter,
+    HistoricalTradeStatusFilter,
     STEligibilityPolicy,
 )
 
@@ -22,6 +23,7 @@ __all__ = [
     "Exclusion",
     "ExclusionCode",
     "HistoricalSTFilter",
+    "HistoricalTradeStatusFilter",
     "ListingHistoryFilter",
     "RuleDecision",
     "SecurityMaster",

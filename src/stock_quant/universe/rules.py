@@ -11,6 +11,8 @@ from stock_quant.domain import (
     SecurityId,
     STStatus,
     STStatusHistory,
+    TradeStatus,
+    TradeStatusHistory,
     UnknownStatusError,
 )
 
@@ -175,5 +177,51 @@ class HistoricalSTFilter:
                 ExclusionCode.MISSING_ST_HISTORY,
                 "st_status",
                 "no supplied ST fact covers the as-of date",
+            )
+        )
+
+
+class HistoricalTradeStatusFilter:
+    """As-of feasibility from status facts, separate from fill/valuation logic."""
+
+    def __init__(
+        self, histories: Mapping[SecurityId, TradeStatusHistory]
+    ) -> None:
+        copied = dict(histories)
+        for security_id, history in copied.items():
+            if not isinstance(security_id, SecurityId):
+                raise TypeError("trade history keys must be SecurityId")
+            if not isinstance(history, TradeStatusHistory):
+                raise TypeError("trade histories must be TradeStatusHistory")
+        self._histories = copied
+
+    def evaluate(self, security_id: SecurityId, as_of: date) -> RuleDecision:
+        if type(as_of) is not date:
+            raise TypeError("as_of must be a date, not a datetime")
+        history = self._histories.get(security_id)
+        if history is None:
+            return self._unknown()
+        try:
+            status = history.as_of(as_of)
+        except UnknownStatusError:
+            return self._unknown()
+        if status is TradeStatus.TRADING:
+            return RuleDecision.include()
+        return RuleDecision.exclude(
+            Exclusion(
+                ExclusionCode.SUSPENDED,
+                "trade_status",
+                "security was suspended on the as-of date",
+                (("status", status.value),),
+            )
+        )
+
+    @staticmethod
+    def _unknown() -> RuleDecision:
+        return RuleDecision.exclude(
+            Exclusion(
+                ExclusionCode.MISSING_TRADE_STATUS_HISTORY,
+                "trade_status",
+                "no supplied trade-status fact covers the as-of date",
             )
         )
