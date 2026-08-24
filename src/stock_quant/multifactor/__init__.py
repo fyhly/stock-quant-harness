@@ -8,6 +8,11 @@ from stock_quant.multifactor.combine import (
     FactorSpec,
     combine_factors,
 )
+from stock_quant.multifactor.neutralize import (
+    NeutralizationError,
+    NeutralizedScore,
+    neutralize_scores,
+)
 
 __all__ = [
     "CompositeScore",
@@ -16,4 +21,7 @@ __all__ = [
     "FactorMissingPolicy",
     "FactorSpec",
     "combine_factors",
+    "NeutralizationError",
+    "NeutralizedScore",
+    "neutralize_scores",
 ]
