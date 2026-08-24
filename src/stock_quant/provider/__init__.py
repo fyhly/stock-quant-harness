@@ -11,9 +11,11 @@ from stock_quant.provider.api import (
     TerminalProviderError,
 )
 from stock_quant.provider.tushare import acquire_daily
+from stock_quant.provider.master import acquire_security_master, SecurityMasterBatch
 
 __all__ = [
     "acquire_daily",
+    "acquire_security_master",
     "FakeTransport",
     "ProviderError",
     "ProviderQuery",
@@ -22,4 +24,5 @@ __all__ = [
     "redact",
     "RetryableProviderError",
     "TerminalProviderError",
+    "SecurityMasterBatch",
 ]
