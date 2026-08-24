@@ -1,6 +1,6 @@
 # Phase 2 ExecPlan — Historical market-data layer
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -95,4 +95,36 @@ No network, real Provider, broker/account/order behavior, or automatic repair. E
 
 ## Evidence
 
-Pending implementation and review.
+- M2.1 — PASS: `a2444eb`; 10 focused Raw tests plus Ruff/Mypy cover canonical
+  identity, deep metadata immutability, append-only/idempotent publication,
+  traversal/collision/tamper rejection and provenance retention.
+- M2.2 — PASS: `d19977b`; 11 focused bar tests plus Ruff/Mypy cover versioned
+  unadjusted OHLCV invariants, exact numeric types, identifiers, duplicates and
+  ordering.
+- M2.3 — PASS: `5ab4b7b`; 7 focused storage tests plus Ruff/Mypy use genuine
+  Parquet (`PAR1`) through pinned PyArrow, fixed schema/partition/metadata,
+  deterministic round-trip, atomic no-overwrite publication and tamper checks.
+- M2.4 — PASS: `1e01c3e`; 6 focused quality tests plus Ruff/Mypy cover clean,
+  empty, corrupt, duplicate/order, injected-calendar gap and severity behavior;
+  reporting does not mutate input.
+- M2.5 — PASS: `c66ed4a`; 6 focused lineage tests and 16 combined Raw/Lineage
+  regressions plus Ruff/Mypy cover complete trace, actual parent verification,
+  missing/fabricated/tampered parents, deterministic multi-parent identity and
+  quality linkage.
+- Main-Agent review found no network imports or overwrite path in runtime data
+  modules. Intentional filesystem mutation appears only in atomic temporary
+  cleanup; direct payload rewrites are confined to tamper tests.
+- Main-Agent Phase Gate: `make verify` PASS on 2026-08-24; Ruff PASS, Mypy PASS
+  (12 sources), tests PASS (72), evals PASS (1). This was the single complete,
+  non-duplicative closure.
+
+## Review decision
+
+- Milestone Reviews M2.1–M2.5: PASS
+- Phase 2 Review: PASS
+- Scope/boundary: no Provider, network data fetch, brokerage, repair-in-place,
+  or Phase 3 implementation. The startup pack remains untracked.
+- Residual risk: physical Parquet byte identity is guaranteed for the pinned
+  PyArrow/platform used by this project; lineage also retains a logical hash.
+  Normalized partitions intentionally constrain one security/year and fixed
+  numeric scales, failing explicitly outside those bounds.
