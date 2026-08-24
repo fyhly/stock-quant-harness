@@ -20,6 +20,7 @@ from stock_quant.research.factor_analytics import (
     QuantileSummary,
     factor_analytics,
 )
+from stock_quant.research.report import render_html_report
 
 __all__ = [
     "RunId",
@@ -41,4 +42,5 @@ __all__ = [
     "FactorPoint",
     "QuantileSummary",
     "factor_analytics",
+    "render_html_report",
 ]
