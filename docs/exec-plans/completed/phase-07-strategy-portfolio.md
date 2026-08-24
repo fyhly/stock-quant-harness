@@ -1,6 +1,6 @@
 # Phase 7 ExecPlan — Strategy + Portfolio
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -46,4 +46,21 @@ Focused Ruff/Mypy/tests per milestone plus cutoff, schedule, precision, determin
 
 ## Evidence
 
-Pending implementation and review.
+- M7.1–M7.6 — PASS in commits `c659915`, `439a043`, `f0444d9`,
+  `1d9f696`, `bde8b27`, `843591b`; 12 focused tests plus Ruff/Mypy/diff passed.
+- Review confirmed availability-aware score contracts, deterministic tie/missing
+  explanations, injected-calendar next-session schedules, exact cash/residual
+  policies, long-only score weighting and conservative basic constraints.
+- Integration reaches only Phase 5 `RebalanceIntent`; strategy contains no
+  execution/fill call or dependency.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (57 sources), tests PASS (204), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M7.1–M7.6: PASS
+- Phase 7 Review: PASS
+- No Provider/network/RiskEngine/execution or Phase 8 scope.
+- Residual risks: caps retain excess as cash rather than redistributing;
+  end-of-coverage schedule does not infer unseen period boundaries; allocation
+  is long-only with explicit deterministic rounding policies.
