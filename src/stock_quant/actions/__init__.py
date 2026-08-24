@@ -23,6 +23,12 @@ from stock_quant.actions.shares import (
     BonusShareAdjustment,
     FractionalSharePolicy,
 )
+from stock_quant.actions.views import (
+    forward_adjusted_view,
+    ForwardAdjustedBar,
+    ForwardAdjustedSeries,
+    ResearchPriceExecutionError,
+)
 from stock_quant.actions.rights import (
     apply_rights_issue,
     RightsElection,
@@ -44,8 +50,12 @@ __all__ = [
     "CashDividendEntitlement",
     "CorporateAction",
     "FlatDividendTaxPolicy",
+    "forward_adjusted_view",
+    "ForwardAdjustedBar",
+    "ForwardAdjustedSeries",
     "FractionalSharePolicy",
     "RightsIssue",
     "RightsElection",
     "RightsIssueAdjustment",
+    "ResearchPriceExecutionError",
 ]
