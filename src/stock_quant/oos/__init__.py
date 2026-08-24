@@ -21,6 +21,14 @@ from stock_quant.oos.walk_forward import (
     WalkForwardWindowRecord,
     run_walk_forward,
 )
+from stock_quant.oos.stitch import (
+    OOSReturnPoint,
+    OOSReturnSegment,
+    StitchError,
+    StitchedEquityPoint,
+    StitchedOOSResult,
+    stitch_oos_results,
+)
 
 __all__ = [
     "OOSWindowSet",
@@ -42,4 +50,10 @@ __all__ = [
     "WalkForwardResult",
     "WalkForwardWindowRecord",
     "run_walk_forward",
+    "OOSReturnPoint",
+    "OOSReturnSegment",
+    "StitchError",
+    "StitchedEquityPoint",
+    "StitchedOOSResult",
+    "stitch_oos_results",
 ]
