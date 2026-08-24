@@ -8,6 +8,11 @@ from stock_quant.research.manifest import (
     verify_manifest,
 )
 from stock_quant.research.artifacts import RunArtifactError, RunArtifacts, RunStore
+from stock_quant.research.metrics import (
+    MetricInputError,
+    StandardMetrics,
+    standard_metrics,
+)
 
 __all__ = [
     "RunId",
@@ -21,4 +26,7 @@ __all__ = [
     "RunArtifactError",
     "RunArtifacts",
     "RunStore",
+    "MetricInputError",
+    "StandardMetrics",
+    "standard_metrics",
 ]
