@@ -42,7 +42,26 @@ from stock_quant.strategy import (
     RebalanceFrequency,
     select_top_n,
 )
-from stock_quant.backtest import RebalanceIntent
+from stock_quant.actions import RawExecutionBar, RawExecutionPriceView
+from stock_quant.backtest import (
+    AccountState,
+    create_backtest_result,
+    EquityPoint,
+    execute_next_open,
+    HoldingSnapshot,
+    PriceLimitRule,
+    PriceLimitSchedule,
+    RawMark,
+    RebalanceIntent,
+    SlippageModel,
+    SuspensionConstraint,
+    TradingCostRule,
+    TradingCostSchedule,
+    value_account,
+)
+from stock_quant.backtest.rebalance import plan_rebalance
+from stock_quant.backtest.result import BacktestResult
+from stock_quant.domain import MarketSegment
 from stock_quant.universe import (
     HistoricalLiquidityFilter,
     HistoricalSTFilter,
@@ -276,4 +295,113 @@ def build_real_allocation(
     )
     return RealAllocationClosure(
         decision, approved_rebalance_intent("real-monthly-v1", decision)
+    )
+
+
+def run_real_backtest(root: Path, decision_day: TradingDay) -> BacktestResult:
+    calendar, bars = load_real_bars(root)
+    allocation = build_real_allocation(root, decision_day)
+    account = AccountState(Decimal("100000"))
+    marks = {
+        target.security_id: RawMark(
+            target.security_id,
+            decision_day,
+            next(
+                bar.close
+                for bar in bars[target.security_id].bars
+                if bar.trading_day == decision_day
+            ),
+        )
+        for target in allocation.rebalance_intent.targets
+    }
+    plan = plan_rebalance(
+        allocation.rebalance_intent, account=account, marks=marks, calendar=calendar
+    )
+    fills = []
+    for order in plan.orders:
+        series = bars[order.security_id]
+        raw = next(bar for bar in series.bars if bar.trading_day == order.fill_day)
+        prior_close = next(
+            bar.close
+            for bar in reversed(series.bars)
+            if bar.trading_day < order.fill_day
+        )
+        execution_bar = RawExecutionBar(
+            raw.security_id,
+            raw.trading_day,
+            raw.open,
+            raw.high,
+            raw.low,
+            raw.close,
+            raw.volume,
+            raw.amount,
+            "real-eastmoney-v1",
+        )
+        outcome = execute_next_open(
+            order,
+            view=RawExecutionPriceView(order.security_id, (execution_bar,)),
+            account=account,
+            calendar=calendar,
+            suspension=SuspensionConstraint(
+                {
+                    order.security_id: TradeStatusHistory(
+                        [StatusInterval(TradeStatus.TRADING, date(2023, 1, 1))]
+                    )
+                }
+            ),
+            price_limits=PriceLimitSchedule(
+                "ashare-main-v1",
+                [
+                    PriceLimitRule(
+                        MarketSegment.MAIN_BOARD,
+                        date(2000, 1, 1),
+                        None,
+                        Decimal("0.1"),
+                    )
+                ],
+            ),
+            prior_close=prior_close,
+            st_status=STStatus.NORMAL,
+            costs=TradingCostSchedule(
+                "real-cost-v1",
+                [
+                    TradingCostRule(
+                        date(2023, 1, 1),
+                        None,
+                        Decimal("0.0003"),
+                        Decimal(5),
+                        Decimal(0),
+                        Decimal(0),
+                        Decimal("0.0005"),
+                    )
+                ],
+            ),
+            slippage=SlippageModel("zero-slippage-v1", Decimal(0)),
+            participation_cap=Decimal("0.1"),
+        )
+        if outcome.fill is None:
+            raise RuntimeError(f"real fixture order rejected: {outcome.rejection}")
+        account = outcome.account
+        fills.append(outcome.fill)
+    fill_day = calendar.next_trading_day(decision_day.value)
+    closing_marks = {
+        security: RawMark(
+            security,
+            fill_day,
+            next(bar.close for bar in series.bars if bar.trading_day == fill_day),
+        )
+        for security, series in bars.items()
+        if account.position(security).quantity > 0
+    }
+    valuation = value_account(account, fill_day, closing_marks)
+    return create_backtest_result(
+        fills=fills,
+        rejections=(),
+        holdings=(HoldingSnapshot.from_account(fill_day, account),),
+        equity=(EquityPoint(fill_day, valuation.equity),),
+        trade_ledger=account.ledger,
+        action_ledger_keys=(),
+        config_identity="4" * 64,
+        data_identity=compute_real_features(root, decision_day).lineage,
+        code_identity="5" * 64,
     )
