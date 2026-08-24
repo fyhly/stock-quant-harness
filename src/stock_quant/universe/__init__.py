@@ -6,6 +6,12 @@ from stock_quant.universe.index import (
     IndexMembershipHistory,
     UnknownIndexHistoryError,
 )
+from stock_quant.universe.industry import (
+    IndustryMembership,
+    IndustryMembershipHistory,
+    IndustryTaxonomy,
+    UnknownIndustryHistoryError,
+)
 from stock_quant.universe.master import (
     ConflictingSecurityMetadataError,
     DuplicateSecurityError,
@@ -33,6 +39,9 @@ __all__ = [
     "IndexId",
     "IndexMembership",
     "IndexMembershipHistory",
+    "IndustryMembership",
+    "IndustryMembershipHistory",
+    "IndustryTaxonomy",
     "ListingHistoryFilter",
     "RuleDecision",
     "SecurityMaster",
@@ -40,4 +49,5 @@ __all__ = [
     "STEligibilityPolicy",
     "UnknownSecurityError",
     "UnknownIndexHistoryError",
+    "UnknownIndustryHistoryError",
 ]
