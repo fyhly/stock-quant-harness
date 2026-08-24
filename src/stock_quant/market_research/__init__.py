@@ -12,6 +12,7 @@ from stock_quant.market_research.runner import (
     run_cross_sectional_batch,
 )
 from stock_quant.market_research.ic import MarketICSummary, market_ic_summary
+from stock_quant.market_research.quantiles import QuantilePortfolio, quantile_backtests
 
 __all__ = [
     "MarketUniverseGateError",
@@ -23,4 +24,6 @@ __all__ = [
     "run_cross_sectional_batch",
     "MarketICSummary",
     "market_ic_summary",
+    "QuantilePortfolio",
+    "quantile_backtests",
 ]
