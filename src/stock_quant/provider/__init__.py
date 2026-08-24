@@ -17,9 +17,11 @@ from stock_quant.provider.history import (
     CapabilityUnavailableError,
     EffectiveHistoryRecord,
 )
+from stock_quant.provider.actions import acquire_corporate_actions, CorporateActionBatch
 
 __all__ = [
     "acquire_daily",
+    "acquire_corporate_actions",
     "acquire_security_master",
     "acquire_effective_history",
     "CapabilityUnavailableError",
@@ -33,4 +35,5 @@ __all__ = [
     "TerminalProviderError",
     "SecurityMasterBatch",
     "EffectiveHistoryRecord",
+    "CorporateActionBatch",
 ]
