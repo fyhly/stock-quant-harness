@@ -13,15 +13,23 @@ from stock_quant.actions.model import (
     CorporateAction,
     RightsIssue,
 )
+from stock_quant.actions.shares import (
+    apply_bonus_shares,
+    BonusShareAdjustment,
+    FractionalSharePolicy,
+)
 
 __all__ = [
     "apply_cash_dividend",
+    "apply_bonus_shares",
     "BonusShareEvent",
+    "BonusShareAdjustment",
     "calculate_cash_entitlement",
     "CashDividend",
     "CashDividendApplication",
     "CashDividendEntitlement",
     "CorporateAction",
     "FlatDividendTaxPolicy",
+    "FractionalSharePolicy",
     "RightsIssue",
 ]
