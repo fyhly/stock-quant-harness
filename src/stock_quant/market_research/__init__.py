@@ -13,6 +13,12 @@ from stock_quant.market_research.runner import (
 )
 from stock_quant.market_research.ic import MarketICSummary, market_ic_summary
 from stock_quant.market_research.quantiles import QuantilePortfolio, quantile_backtests
+from stock_quant.market_research.exposure import (
+    ExposureAnalyticsError,
+    ExposureAttribution,
+    ExposurePoint,
+    exposure_attribution,
+)
 
 __all__ = [
     "MarketUniverseGateError",
@@ -26,4 +32,8 @@ __all__ = [
     "market_ic_summary",
     "QuantilePortfolio",
     "quantile_backtests",
+    "ExposureAnalyticsError",
+    "ExposureAttribution",
+    "ExposurePoint",
+    "exposure_attribution",
 ]
