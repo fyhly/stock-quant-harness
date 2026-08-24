@@ -40,6 +40,13 @@ from stock_quant.backtest.limits import (
     PriceLimitRule,
     PriceLimitSchedule,
 )
+from stock_quant.backtest.execution import (
+    execute_next_open,
+    ExecutionOutcome,
+    Fill,
+    OrderIntent,
+    SlippageModel,
+)
 from stock_quant.backtest.t1 import (
     credit_corporate_action_lot,
     require_sellable,
@@ -58,11 +65,15 @@ __all__ = [
     "credit_corporate_action_lot",
     "ConstraintDecision",
     "EventKind",
+    "execute_next_open",
+    "ExecutionOutcome",
     "EventPhase",
     "evaluate_price_limit",
     "fill_price_within_limits",
+    "Fill",
     "MissingValuationError",
     "OrderSide",
+    "OrderIntent",
     "Position",
     "PositionLot",
     "PriceLimitBand",
@@ -72,6 +83,7 @@ __all__ = [
     "RejectionCode",
     "require_sellable",
     "sellable_quantity",
+    "SlippageModel",
     "StaleValuationError",
     "SuspensionConstraint",
     "TimelineConflictError",
