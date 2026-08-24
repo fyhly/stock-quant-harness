@@ -1,6 +1,6 @@
 # Phase 11 ExecPlan — Benchmark Factor / Strategy Library
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -46,4 +46,18 @@ Focused Ruff/Mypy/tests and leakage/timing/determinism regressions. Gate require
 
 ## Evidence
 
-Pending implementation and review.
+- M11.1–M11.6 — PASS in commits `15ec4cd`, `023e173`, `2f4c594`,
+  `db76bd6`, `013dad2`, `2278f3a`; six focused tests plus Ruff/Mypy passed.
+- Review confirmed fixed configs, PIT financial selection, prior-session-only
+  technical signals, deterministic ties and next-session eligibility. The
+  report exposes missing/failure cases and makes no parameter, winner or OOS
+  claim.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (81 sources), tests PASS (251), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M11.1–M11.6: PASS
+- Phase 11 Review: PASS
+- Residual: calibration scores/signals are not profitability evidence; technical
+  callers must explicitly choose a research price view.
