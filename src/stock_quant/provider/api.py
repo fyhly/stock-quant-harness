@@ -24,10 +24,13 @@ class ProviderQuery:
     fields: Tuple[str, ...]
     params: Tuple[Tuple[str, str], ...]
     schema_version: str
+    base_url: str = "https://api.tushare.pro"
 
     def __post_init__(self) -> None:
         if not self.endpoint.strip() or not self.schema_version.strip():
             raise ValueError("endpoint and schema version are required")
+        if not self.base_url.startswith("https://"):
+            raise ValueError("provider transport requires an HTTPS base URL")
         if self.fields != tuple(sorted(set(self.fields))) or self.params != tuple(
             sorted(set(self.params))
         ):
@@ -41,6 +44,7 @@ class ProviderQuery:
                 "fields": self.fields,
                 "params": self.params,
                 "schema": self.schema_version,
+                "base_url": self.base_url,
             },
             sort_keys=True,
             separators=(",", ":"),

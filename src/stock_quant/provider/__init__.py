@@ -17,13 +17,18 @@ from stock_quant.provider.history import (
     CapabilityUnavailableError,
     EffectiveHistoryRecord,
 )
-from stock_quant.provider.actions import acquire_corporate_actions, CorporateActionBatch
+from stock_quant.provider.actions import (
+    acquire_corporate_actions,
+    acquire_tushare_rights,
+    CorporateActionBatch,
+)
 from stock_quant.provider.financial import acquire_financials, FinancialObservation
 from stock_quant.provider.sync import IncrementalSync, SyncManifest, SyncPlan
 
 __all__ = [
     "acquire_daily",
     "acquire_corporate_actions",
+    "acquire_tushare_rights",
     "acquire_financials",
     "acquire_security_master",
     "acquire_effective_history",
