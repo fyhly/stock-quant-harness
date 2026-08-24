@@ -30,6 +30,29 @@ def trailing_return(
 ) -> Decimal:
     if sessions not in (20, 60, 120):
         raise FeatureContractError("momentum sessions must be 20, 60, or 120")
+    return session_return(
+        observations,
+        security_id=security_id,
+        decision_day=decision_day,
+        decision_cutoff=decision_cutoff,
+        calendar=calendar,
+        sessions=sessions,
+        view_identity=view_identity,
+    )
+
+
+def session_return(
+    observations: Iterable[PriceObservation],
+    *,
+    security_id: SecurityId,
+    decision_day: TradingDay,
+    decision_cutoff: datetime,
+    calendar: TradingCalendar,
+    sessions: int,
+    view_identity: str,
+) -> Decimal:
+    if sessions <= 0:
+        raise FeatureContractError("sessions must be positive")
     eligible_days = tuple(day for day in calendar.trading_days if day < decision_day)
     if len(eligible_days) < sessions + 1:
         raise FeatureContractError("insufficient momentum history")
