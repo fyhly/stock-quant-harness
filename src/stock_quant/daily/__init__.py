@@ -16,6 +16,11 @@ from stock_quant.daily.factors import (
     DailyFactorSnapshot,
     refresh_daily_factors,
 )
+from stock_quant.daily.candidates import (
+    DailyCandidate,
+    DailyCandidateSnapshot,
+    generate_daily_candidates,
+)
 
 __all__ = ["DailyDataUpdate", "DailyUpdateError", "run_daily_update"]
 __all__ += [
@@ -30,4 +35,7 @@ __all__ += [
     "DailyFactorRow",
     "DailyFactorSnapshot",
     "refresh_daily_factors",
+    "DailyCandidate",
+    "DailyCandidateSnapshot",
+    "generate_daily_candidates",
 ]
