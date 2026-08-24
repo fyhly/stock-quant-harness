@@ -1,6 +1,6 @@
 # Phase 4 ExecPlan — Corporate Actions / Adjustments
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -61,4 +61,23 @@ Every milestone requires focused Ruff/Mypy/tests plus time-boundary, exact-arith
 
 ## Evidence
 
-Pending implementation and review.
+- M4.1–M4.9 — PASS in ordered commits `4b14849`, `8f4cf5c`, `0b171bf`,
+  `ae250a2`, `32b9e0a`, `198c5b6`, `39dc809`, `19a8338`, `c726d08`.
+- Focused Ruff/Mypy/tests and diff checks passed at every milestone. Review
+  confirmed exact event identity, distinct announcement/record/ex/settlement
+  dates, explicit tax/fraction/election policies, atomic same-day factor math,
+  knowledge cutoffs, and input-order-independent lineage.
+- Forward/backward views are distinct research-only types; the execution API
+  accepts only unadjusted RawExecutionPriceView. Position hooks use idempotent
+  ledger keys and tested exact cash/quantity/cost/NAV transitions.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (29 sources), tests PASS (140), evals PASS (1); single full closure.
+
+## Review decision
+
+- Milestone Reviews M4.1–M4.9: PASS
+- Phase 4 Review: PASS
+- No Provider/network/order/event-loop/broker or Phase 5 scope.
+- Residual risks: date—not intraday—availability; minimal flat-tax and one-stage
+  rights settlement policies; no cash-in-lieu/tick quantization; caller must
+  supply verified pre-ex raw references and record-date entitlement quantities.
