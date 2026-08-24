@@ -1,9 +1,11 @@
 """Offline-only pipeline over the committed real A-share fixture."""
 
-from datetime import date, time
+from dataclasses import dataclass
+from datetime import date, datetime, time
 from decimal import Decimal
 from pathlib import Path
 from typing import Dict, Tuple
+from zoneinfo import ZoneInfo
 
 import pyarrow.parquet as pq  # type: ignore[import-untyped]
 
@@ -20,6 +22,7 @@ from stock_quant.domain import (
     TradingDay,
     TradingSession,
 )
+from stock_quant.features import PriceObservation, trailing_return, trailing_volatility
 from stock_quant.universe import (
     HistoricalLiquidityFilter,
     HistoricalSTFilter,
@@ -35,6 +38,21 @@ from stock_quant.universe import (
     UniverseEngine,
     UniverseResult,
 )
+
+
+@dataclass(frozen=True)
+class RealFeatureRow:
+    security_id: SecurityId
+    momentum_20: Decimal
+    realized_volatility_20: Decimal
+
+
+@dataclass(frozen=True)
+class RealFeatureClosure:
+    decision_day: TradingDay
+    decision_cutoff: datetime
+    rows: Tuple[RealFeatureRow, ...]
+    lineage: str
 
 
 def load_real_bars(
@@ -123,3 +141,47 @@ def build_real_universe(root: Path, as_of: date) -> UniverseResult:
         bars=historical_bars,
     )
     return engine.build(as_of)
+
+
+def compute_real_features(root: Path, decision_day: TradingDay) -> RealFeatureClosure:
+    import json
+
+    calendar, bars = load_real_bars(root)
+    cutoff = datetime.combine(decision_day.value, time(15), ZoneInfo("Asia/Shanghai"))
+    output = []
+    for security, series in sorted(bars.items()):
+        observations = tuple(
+            PriceObservation(
+                security,
+                bar.trading_day,
+                bar.close,
+                datetime.combine(
+                    bar.trading_day.value, time(16), ZoneInfo("Asia/Shanghai")
+                ),
+                "eastmoney-unadjusted-fqt0-v1",
+            )
+            for bar in series.bars
+            if bar.trading_day < decision_day
+        )
+        momentum = trailing_return(
+            observations,
+            security_id=security,
+            decision_day=decision_day,
+            decision_cutoff=cutoff,
+            calendar=calendar,
+            sessions=20,
+            view_identity="eastmoney-unadjusted-fqt0-v1",
+        )
+        volatility = trailing_volatility(
+            observations,
+            security_id=security,
+            decision_day=decision_day,
+            decision_cutoff=cutoff,
+            calendar=calendar,
+            sessions=20,
+        )
+        output.append(RealFeatureRow(security, momentum, volatility.realized))
+    manifest = json.loads((root / "manifest.json").read_text())
+    return RealFeatureClosure(
+        decision_day, cutoff, tuple(output), manifest["normalized_sha256"]
+    )
