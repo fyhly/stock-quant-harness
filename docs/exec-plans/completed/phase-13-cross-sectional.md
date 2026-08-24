@@ -1,6 +1,6 @@
 # Phase 13 ExecPlan — Market-wide / Multi-security Research
 
-Status: ACTIVE
+Status: COMPLETED
 
 ## Objective
 
@@ -46,4 +46,17 @@ Focused Ruff/Mypy/tests plus PIT, batching, failure-retention, date-alignment an
 
 ## Evidence
 
-Pending implementation and review.
+- M13.1–M13.6 — PASS in commits `d9b8fd8`, `d2794f3`, `afdc646`,
+  `5a8c2b4`, `ebe5412`, `33ed7f3`; 12 focused tests plus Ruff/Mypy passed.
+- Review confirmed PIT universe quality evidence, deterministic batch totals,
+  date-aligned IC, prior-cutoff quantile ranking, historical taxonomy attribution
+  and append-only escaped failure reporting with exact reconciliation.
+- Main-Agent Phase Gate `make verify` PASS on 2026-08-24: Ruff PASS, Mypy PASS
+  (96 sources), tests PASS (278), evals PASS (1).
+
+## Review decision
+
+- Milestone Reviews M13.1–M13.6: PASS
+- Phase 13 Review: PASS
+- Residual: tied ranks may leave explicit empty quantiles; style attribution is
+  declared linear contribution plus residual, not fitted regression.
